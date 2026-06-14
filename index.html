@@ -78,13 +78,16 @@
     <div class="sidebar">
 
       <!-- category filter buttons — built by buildFilters() in script.js -->
-      <div class="panel panel-filters">
+      <div class="panel panel-filters" id="panel-filters">
         <div class="panel-label">filter by type</div>
         <div class="cat-list" id="cat-filters"></div>
       </div>
 
+      <!-- draggable handle between filters and sources -->
+      <div class="panel-resize-handle" id="row-handle-1"></div>
+
       <!-- data source legend -->
-      <div class="panel panel-sources">
+      <div class="panel panel-sources" id="panel-sources">
         <div class="panel-label">data sources</div>
         <div class="source-legend">
           <div class="source-row">
@@ -102,8 +105,11 @@
         </div>
       </div>
 
+      <!-- draggable handle between sources and index -->
+      <div class="panel-resize-handle" id="row-handle-2"></div>
+
       <!-- scrollable place index — built by renderListings() in script.js -->
-      <div class="panel panel-index">
+      <div class="panel panel-index" id="panel-index">
         <div class="panel-label">index <span class="muted" id="count-label">0 places</span></div>
         <div id="listings"></div>
       </div>

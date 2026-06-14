@@ -18,8 +18,8 @@
    ============================================================ */
 
 // back4app credentials — swap these out for real values
-var BACK4APP_APP_ID = 'YOUR_BACK4APP_APP_ID';
-var BACK4APP_JS_KEY = 'YOUR_BACK4APP_JS_KEY';
+var BACK4APP_APP_ID = 'rIyLxl8dBdYyeGszVuQCldrfXw7jkEL6ZlnzH0Oa';
+var BACK4APP_JS_KEY = 'm64FAAIQEPo5itUwfP1A0lzY3mZRbBJVdqN2HXFX';
 var BACK4APP_URL    = 'https://parseapi.back4app.com/classes/Place';
 
 // stadia maps / stamen toner API key
@@ -903,6 +903,80 @@ async function loadAll() {
     setLoading(100);
   });
 }
+
+
+/* ============================================================
+   PANEL ROW RESIZE HANDLES
+   two horizontal drag handles sit between the three sidebar panels.
+   dragging them redistributes height between adjacent panels,
+   exactly like the sidebar/map split but on the vertical axis.
+
+   the index panel always takes whatever space remains (flex:1),
+   so we only need to set explicit heights on filters and sources.
+   ============================================================ */
+
+(function() {
+  var sidebar  = document.querySelector('.sidebar');
+  var filters  = document.querySelector('#panel-filters');
+  var sources  = document.querySelector('#panel-sources');
+  var handle1  = document.querySelector('#row-handle-1');  // between filters & sources
+  var handle2  = document.querySelector('#row-handle-2');  // between sources & index
+
+  var dragging    = null;   // which handle is active ('h1' or 'h2')
+  var dragStartY  = 0;
+  var startH1     = 0;      // filters height at drag start
+  var startH2     = 0;      // sources height at drag start
+
+  // minimum height for any panel — enough to show the label row
+  var MIN_H = 38;
+
+  function startDrag(handleId, e) {
+    dragging   = handleId;
+    dragStartY = e.clientY;
+    startH1    = filters.getBoundingClientRect().height;
+    startH2    = sources.getBoundingClientRect().height;
+
+    document.querySelector('#' + handleId).classList.add('dragging');
+    document.body.style.cursor     = 'row-resize';
+    document.body.style.userSelect = 'none';
+    e.preventDefault();
+  }
+
+  handle1.addEventListener('mousedown', function(e) { startDrag('row-handle-1', e); });
+  handle2.addEventListener('mousedown', function(e) { startDrag('row-handle-2', e); });
+
+  document.addEventListener('mousemove', function(e) {
+    if (!dragging) return;
+
+    var delta = e.clientY - dragStartY;
+
+    if (dragging === 'row-handle-1') {
+      // moving handle1 changes the filters panel height only;
+      // the sources panel absorbs the difference from below
+      var newH1 = Math.max(MIN_H, startH1 + delta);
+      var newH2 = Math.max(MIN_H, startH2 - delta);
+      filters.style.height = newH1 + 'px';
+      filters.style.flex   = '0 0 ' + newH1 + 'px';
+      sources.style.height = newH2 + 'px';
+      sources.style.flex   = '0 0 ' + newH2 + 'px';
+
+    } else if (dragging === 'row-handle-2') {
+      // moving handle2 changes the sources panel height;
+      // the index panel (flex:1) absorbs the rest automatically
+      var newH2 = Math.max(MIN_H, startH2 + delta);
+      sources.style.height = newH2 + 'px';
+      sources.style.flex   = '0 0 ' + newH2 + 'px';
+    }
+  });
+
+  document.addEventListener('mouseup', function() {
+    if (!dragging) return;
+    document.querySelector('#' + dragging).classList.remove('dragging');
+    dragging = null;
+    document.body.style.cursor     = '';
+    document.body.style.userSelect = '';
+  });
+}());
 
 
 /* ============================================================

@@ -220,6 +220,8 @@ header {
 .panel {
   border-bottom: var(--border);
   padding: 1rem 1.15rem;
+  /* panels don't set their own height — the sidebar drag handles control it */
+  overflow: hidden;
 }
 
 /* each panel gets its own tinted background */
@@ -227,7 +229,7 @@ header {
 .panel-sources { background: var(--sky-tint); }
 .panel-index   {
   background: var(--flame-tint);
-  flex: 1;
+  flex: 1;       /* takes whatever space is left after the other two panels */
   min-height: 0;
   display: flex;
   flex-direction: column;
@@ -248,6 +250,34 @@ header {
   letter-spacing: 0.04em;
   text-transform: none;
   color: var(--stone);
+}
+
+/* horizontal drag handle between panels — mirrors the vertical one on the sidebar */
+.panel-resize-handle {
+  height: 4px;
+  background: var(--ink);
+  cursor: row-resize;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 5;
+  transition: background 0.1s;
+}
+.panel-resize-handle:hover,
+.panel-resize-handle.dragging {
+  background: var(--flame);
+}
+/* subtle grip dots in the center */
+.panel-resize-handle::after {
+  content: '···';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--paper);
+  font-size: 10px;
+  letter-spacing: 2px;
+  pointer-events: none;
+  line-height: 0;
 }
 
 
