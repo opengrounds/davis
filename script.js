@@ -6,27 +6,53 @@
 // Wire up the category select buttons in the add-a-place form.
 // Called once on DOMContentLoaded.
 function initModalButtons() {
-  // category grid
+  // category grid — select + bounce animation
   document.querySelectorAll('#f-cat-grid .cat-select-btn').forEach(function(btn) {
     btn.addEventListener('click', function() {
       document.querySelectorAll('#f-cat-grid .cat-select-btn').forEach(function(b) {
-        b.classList.remove('active');
+        b.classList.remove('active', 'just-selected');
       });
-      btn.classList.add('active');
+      btn.classList.add('active', 'just-selected');
+      // remove just-selected after animation so it can retrigger
+      btn.addEventListener('animationend', function() {
+        btn.classList.remove('just-selected');
+      }, { once: true });
       document.querySelector('#f-cat').value = btn.dataset.value;
     });
   });
 
-  // correction type grid
+  // correction type grid — select + bounce + show/hide coords row
+  var coordsRow = document.querySelector('#c-coords-row');
+  if (coordsRow) {
+    coordsRow.classList.add('c-coords-hidden');
+  }
+
   document.querySelectorAll('#c-type-grid .corr-type-btn').forEach(function(btn) {
     btn.addEventListener('click', function() {
       document.querySelectorAll('#c-type-grid .corr-type-btn').forEach(function(b) {
-        b.classList.remove('active');
+        b.classList.remove('active', 'just-selected');
       });
-      btn.classList.add('active');
+      btn.classList.add('active', 'just-selected');
+      btn.addEventListener('animationend', function() {
+        btn.classList.remove('just-selected');
+      }, { once: true });
       document.querySelector('#c-type').value = btn.dataset.value;
+
+      // show coords row only when wrong-location is selected
+      if (coordsRow) {
+        if (btn.dataset.value === 'wrong-location') {
+          coordsRow.classList.remove('c-coords-hidden');
+          coordsRow.classList.add('c-coords-visible');
+        } else {
+          coordsRow.classList.remove('c-coords-visible');
+          coordsRow.classList.add('c-coords-hidden');
+        }
+      }
     });
   });
+
+  // submit buttons — loading state while async call runs
+  // (actual submit fns will call setSubmitLoading / clearSubmitLoading)
 
   // close modals on backdrop click
   ['submit-modal', 'correction-modal', 'about-modal'].forEach(function(id) {
@@ -38,6 +64,21 @@ function initModalButtons() {
       }
     });
   });
+}
+
+function setSubmitLoading(btnSelector, loadingText) {
+  var btn = document.querySelector(btnSelector);
+  if (!btn) return;
+  btn._origText = btn.innerHTML;
+  btn.innerHTML = loadingText || 'sending…';
+  btn.classList.add('loading');
+}
+
+function clearSubmitLoading(btnSelector) {
+  var btn = document.querySelector(btnSelector);
+  if (!btn) return;
+  if (btn._origText) btn.innerHTML = btn._origText;
+  btn.classList.remove('loading');
 }
 
 document.addEventListener('DOMContentLoaded', initModalButtons);
@@ -1003,6 +1044,7 @@ async function submitPlace() {
     return;
   }
 
+  setSubmitLoading('#submit-modal .btn-submit', 'submitting… ⟳');
   try {
     var res = await fetch(BACK4APP_URL, {
       method: 'POST',
@@ -1026,6 +1068,7 @@ async function submitPlace() {
     });
 
     if (res.ok) {
+      clearSubmitLoading('#submit-modal .btn-submit');
       closeSubmit();
       // clear the form fields
       var fields = ['f-name', 'f-addr', 'f-desc', 'f-link', 'f-contact', 'f-lat', 'f-lng'];
@@ -1037,10 +1080,12 @@ async function submitPlace() {
       document.querySelectorAll('#f-cat-grid .cat-select-btn').forEach(function(b) { b.classList.remove('active'); });
       showToast('submitted. thanks for adding to the commons.');
     } else {
+      clearSubmitLoading('#submit-modal .btn-submit');
       showToast('something went wrong. try again?');
     }
 
   } catch(e) {
+    clearSubmitLoading('#submit-modal .btn-submit');
     showToast('connection error. please try again.');
   }
 }
@@ -1063,6 +1108,7 @@ async function submitCorrection() {
     return;
   }
 
+  setSubmitLoading('#correction-modal .btn-submit', 'sending… ⟳');
   try {
     // corrections go to a separate Back4App class
     var correctionUrl = BACK4APP_URL.replace('/Place', '/Correction');
@@ -1086,6 +1132,7 @@ async function submitCorrection() {
     });
 
     if (res.ok) {
+      clearSubmitLoading('#correction-modal .btn-submit');
       closeCorrection();
       var fields = ['c-name', 'c-details', 'c-lat', 'c-lng', 'c-email'];
       for (var i = 0; i < fields.length; i++) {
@@ -1095,10 +1142,12 @@ async function submitCorrection() {
       document.querySelectorAll('#c-type-grid .corr-type-btn').forEach(function(b) { b.classList.remove('active'); });
       showToast('correction sent. thanks for keeping the map accurate.');
     } else {
+      clearSubmitLoading('#correction-modal .btn-submit');
       showToast('something went wrong. try again?');
     }
 
   } catch(e) {
+    clearSubmitLoading('#correction-modal .btn-submit');
     showToast('connection error. please try again.');
   }
 }

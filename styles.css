@@ -779,7 +779,7 @@ header {
 
 /* full-screen dimmed backdrop — hidden by default */
 .modal-backdrop {
-  display: none;
+  display: flex;
   position: fixed;
   inset: 0;
   background: rgba(21,19,15,0.6);
@@ -787,9 +787,15 @@ header {
   align-items: center;
   justify-content: center;
   padding: 2rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
 }
 
-.modal-backdrop.open { display: flex; }
+.modal-backdrop.open {
+  opacity: 1;
+  pointer-events: auto;
+}
 
 /* outer wrapper provides the offset shadow effect */
 .modal-outer {
@@ -863,6 +869,7 @@ label {
 
 input[type="text"],
 input[type="url"],
+input[type="email"],
 textarea,
 select {
   width: 100%;
@@ -1804,4 +1811,365 @@ textarea { min-height: 72px; }
   }
   .about-hero-wordmark { font-size: 1.7rem; }
   .form-row { flex-direction: column; gap: 0; }
+}
+
+
+/* ============================================================
+   MODAL ANIMATIONS & INTERACTIVITY
+   ============================================================ */
+
+/* --- Modal entrance --- */
+@keyframes modal-pop-in {
+  0%   { opacity: 0; transform: translateY(18px) scale(0.97); }
+  60%  { opacity: 1; transform: translateY(-3px) scale(1.005); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.modal-backdrop.open .modal-outer {
+  animation: modal-pop-in 0.32s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* --- Staggered cat-select-btn entrance --- */
+@keyframes btn-slide-in {
+  0%   { opacity: 0; transform: translateY(8px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.modal-backdrop.open .cat-select-btn {
+  animation: btn-slide-in 0.28s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+/* stagger each button using nth-child */
+.modal-backdrop.open .cat-select-btn:nth-child(1)  { animation-delay: 0.04s; }
+.modal-backdrop.open .cat-select-btn:nth-child(2)  { animation-delay: 0.07s; }
+.modal-backdrop.open .cat-select-btn:nth-child(3)  { animation-delay: 0.10s; }
+.modal-backdrop.open .cat-select-btn:nth-child(4)  { animation-delay: 0.13s; }
+.modal-backdrop.open .cat-select-btn:nth-child(5)  { animation-delay: 0.16s; }
+.modal-backdrop.open .cat-select-btn:nth-child(6)  { animation-delay: 0.19s; }
+.modal-backdrop.open .cat-select-btn:nth-child(7)  { animation-delay: 0.22s; }
+.modal-backdrop.open .cat-select-btn:nth-child(8)  { animation-delay: 0.25s; }
+.modal-backdrop.open .cat-select-btn:nth-child(9)  { animation-delay: 0.28s; }
+.modal-backdrop.open .cat-select-btn:nth-child(10) { animation-delay: 0.31s; }
+.modal-backdrop.open .cat-select-btn:nth-child(11) { animation-delay: 0.34s; }
+.modal-backdrop.open .cat-select-btn:nth-child(12) { animation-delay: 0.37s; }
+.modal-backdrop.open .cat-select-btn:nth-child(13) { animation-delay: 0.40s; }
+.modal-backdrop.open .cat-select-btn:nth-child(14) { animation-delay: 0.43s; }
+.modal-backdrop.open .cat-select-btn:nth-child(15) { animation-delay: 0.46s; }
+.modal-backdrop.open .cat-select-btn:nth-child(16) { animation-delay: 0.49s; }
+
+/* cat button selected bounce */
+@keyframes cat-btn-select {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(0.93); }
+  70%  { transform: scale(1.06); }
+  100% { transform: scale(1); }
+}
+.cat-select-btn.just-selected {
+  animation: cat-btn-select 0.28s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* tag checkbox: flip-in when checked */
+@keyframes tag-check-pop {
+  0%   { transform: scale(0.88); }
+  55%  { transform: scale(1.08); }
+  100% { transform: scale(1); }
+}
+.tag-check:has(input:checked) {
+  animation: tag-check-pop 0.22s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* --- Correction type buttons stagger in --- */
+.modal-backdrop.open .corr-type-btn {
+  animation: btn-slide-in 0.28s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.modal-backdrop.open .corr-type-btn:nth-child(1) { animation-delay: 0.05s; }
+.modal-backdrop.open .corr-type-btn:nth-child(2) { animation-delay: 0.10s; }
+.modal-backdrop.open .corr-type-btn:nth-child(3) { animation-delay: 0.15s; }
+.modal-backdrop.open .corr-type-btn:nth-child(4) { animation-delay: 0.20s; }
+.modal-backdrop.open .corr-type-btn:nth-child(5) { animation-delay: 0.25s; }
+
+/* corr-type selected bounce */
+@keyframes corr-btn-select {
+  0%   { transform: scale(1) rotate(0deg); }
+  35%  { transform: scale(0.9) rotate(-2deg); }
+  70%  { transform: scale(1.07) rotate(1deg); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+.corr-type-btn.just-selected {
+  animation: corr-btn-select 0.3s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* coords row reveal when wrong-location is selected */
+.c-coords-hidden {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+              opacity 0.25s ease,
+              margin 0.3s ease;
+  margin-bottom: 0 !important;
+}
+.c-coords-visible {
+  max-height: 100px;
+  opacity: 1;
+  margin-bottom: 0.9rem;
+}
+
+/* icon wiggle on corr-type-btn hover */
+.corr-type-btn:hover .corr-type-icon {
+  display: inline-block;
+  animation: icon-wiggle 0.35s ease both;
+}
+@keyframes icon-wiggle {
+  0%   { transform: rotate(0deg); }
+  25%  { transform: rotate(-12deg); }
+  55%  { transform: rotate(10deg); }
+  75%  { transform: rotate(-5deg); }
+  100% { transform: rotate(0deg); }
+}
+
+/* --- Submit button loading state --- */
+.btn-submit.loading {
+  pointer-events: none;
+  opacity: 0.7;
+  position: relative;
+  overflow: hidden;
+}
+.btn-submit.loading::after {
+  content: '';
+  position: absolute;
+  left: -100%;
+  top: 0;
+  width: 60%;
+  height: 100%;
+  background: rgba(247,244,236,0.25);
+  animation: btn-sweep 0.8s ease-in-out infinite;
+}
+@keyframes btn-sweep {
+  0%   { left: -60%; }
+  100% { left: 110%; }
+}
+
+/* --- About modal interactivity --- */
+
+/* simple fade-in for source pills */
+#about-modal.open .about-source-pill {
+  animation: about-fade-in 0.25s ease both;
+}
+@keyframes about-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* close button spins on hover */
+.modal-close--about {
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.2s;
+}
+.modal-close--about:hover {
+  transform: rotate(90deg) !important;
+  opacity: 1 !important;
+}
+
+/* about-text links */
+.about-text a {
+  text-decoration: underline;
+  color: var(--flame);
+  font-weight: 700;
+}
+
+/* byline name */
+.about-byline-name {
+  display: inline-block;
+  transition: color 0.15s;
+}
+.about-byline-name:hover {
+  color: var(--pink) !important;
+}
+
+/* --- Respect reduced motion --- */
+@media (prefers-reduced-motion: reduce) {
+  .modal-backdrop.open .modal-outer,
+  .modal-backdrop.open .cat-select-btn,
+  .modal-backdrop.open .corr-type-btn,
+  .cat-select-btn.just-selected,
+  .corr-type-btn.just-selected,
+  .tag-check:has(input:checked) {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+
+/* ============================================================
+   MODAL & FORM INTERACTIVITY — animations, hover, fun
+   ============================================================ */
+
+/* --- Modal entrance animation --- */
+@keyframes modal-spring-up {
+  0%   { transform: translateY(28px) scale(0.97); opacity: 0; }
+  60%  { transform: translateY(-4px) scale(1.005); opacity: 1; }
+  80%  { transform: translateY(2px) scale(0.999); }
+  100% { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+.modal-backdrop.open .modal-outer {
+  animation: modal-spring-up 0.38s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* --- Close button spin on hover (all modals) --- */
+.modal-close {
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.15s, opacity 0.15s;
+  display: inline-block;
+}
+.modal-close:hover {
+  transform: rotate(90deg) scale(1.2);
+}
+.modal-header--add .modal-close:hover,
+.modal-header--correction .modal-close:hover {
+  color: var(--paper) !important;
+  opacity: 1;
+}
+
+/* --- Category select buttons — richer hover --- */
+@keyframes cat-btn-select {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(0.94); }
+  70%  { transform: scale(1.04); }
+  100% { transform: scale(1); }
+}
+
+.cat-select-btn {
+  transition: border-color 0.12s, background 0.12s, color 0.12s, transform 0.12s, box-shadow 0.12s;
+}
+.cat-select-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+.cat-select-btn:active {
+  transform: translateY(1px);
+  box-shadow: 1px 1px 0 var(--ink);
+}
+.cat-select-btn.active {
+  box-shadow: 3px 3px 0 rgba(21,19,15,0.35);
+  animation: cat-btn-select 0.3s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+
+
+
+
+/* --- Submit button — satisfying press --- */
+.btn-submit {
+  transition: transform 0.1s, box-shadow 0.1s, background 0.12s, color 0.12s;
+  position: relative;
+  overflow: hidden;
+}
+.btn-submit::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,0.15);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.btn-submit:hover::after { opacity: 1; }
+.btn-submit:active {
+  transform: translate(2px, 2px) !important;
+  box-shadow: 1px 1px 0 var(--ink) !important;
+}
+
+/* --- Input fields — colored focus ring per modal --- */
+#submit-modal input:focus,
+#submit-modal textarea:focus,
+#submit-modal select:focus {
+  outline: 3px solid var(--flame);
+  outline-offset: 1px;
+  transition: outline-color 0.15s;
+}
+
+#correction-modal input:focus,
+#correction-modal textarea:focus {
+  outline: 3px solid var(--sky);
+  outline-offset: 1px;
+}
+
+/* Fix email autofill background on webkit */
+input[type="email"]:-webkit-autofill,
+input[type="email"]:-webkit-autofill:hover,
+input[type="email"]:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0px 1000px var(--paper-dim) inset;
+  -webkit-text-fill-color: var(--ink);
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+/* --- Correction type buttons — hover lift + active flash --- */
+.corr-type-btn {
+  transition: border-color 0.12s, background 0.12s, color 0.12s, transform 0.12s, box-shadow 0.12s;
+}
+.corr-type-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+.corr-type-btn:active {
+  transform: translateY(1px);
+  box-shadow: 1px 1px 0 var(--ink);
+}
+
+@keyframes corr-btn-select {
+  0%   { transform: scale(1); }
+  35%  { transform: scale(0.93); }
+  65%  { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+.corr-type-btn.active {
+  box-shadow: 3px 3px 0 rgba(21,19,15,0.35);
+  animation: corr-btn-select 0.28s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* icon bounce on hover */
+.corr-type-btn:hover .corr-type-icon {
+  display: inline-block;
+  animation: icon-bounce 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+@keyframes icon-bounce {
+  0%   { transform: translateY(0); }
+  40%  { transform: translateY(-5px); }
+  70%  { transform: translateY(2px); }
+  100% { transform: translateY(0); }
+}
+
+/* stagger correction buttons in */
+@keyframes corr-btn-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.modal-backdrop.open .corr-type-btn {
+  animation: corr-btn-in 0.3s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.modal-backdrop.open .corr-type-btn:nth-child(1) { animation-delay: 0.06s; }
+.modal-backdrop.open .corr-type-btn:nth-child(2) { animation-delay: 0.10s; }
+.modal-backdrop.open .corr-type-btn:nth-child(3) { animation-delay: 0.14s; }
+.modal-backdrop.open .corr-type-btn:nth-child(4) { animation-delay: 0.18s; }
+.modal-backdrop.open .corr-type-btn:nth-child(5) { animation-delay: 0.22s; }
+
+/* about source pills hover */
+.about-source-pill {
+  transition: background 0.12s, color 0.12s;
+}
+.about-source-pill:not(.about-source-pill--you):hover {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+/* reduce motion — respect prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .modal-backdrop.open .modal-outer,
+  .modal-backdrop.open .cat-select-btn,
+  .modal-backdrop.open .corr-type-btn,
+  #about-modal.open .about-source-pill,
+  .corr-type-btn.active,
+  .cat-select-btn.active,
+  .tag-check:has(input:checked) {
+    animation: none !important;
+    transition: none !important;
+  }
 }
