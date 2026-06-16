@@ -1122,10 +1122,17 @@ textarea { min-height: 72px; }
    ============================================================ */
 
 /* hide mobile chrome on desktop */
-.mobile-bar   { display: none; }
-.mobile-sheet { display: none; }
+.mobile-bar        { display: none; }
+.mobile-sheet      { display: none; }
+.mobile-more-tray  { display: none; }
 
 @media (max-width: 640px) {
+
+  /* ---- safe area / notch support ---- */
+  :root {
+    --safe-bottom: env(safe-area-inset-bottom, 0px);
+    --tab-h: calc(60px + var(--safe-bottom));
+  }
 
   /* ---- header ---- */
   header {
@@ -1135,12 +1142,12 @@ textarea { min-height: 72px; }
   .brand-title { font-size: 1.25rem; }
   .brand-mark  { width: 32px; height: 32px; }
   .brand-sub   { display: none; }
-  .header-right { display: none; } /* actions live in bottom bar instead */
+  .header-right { display: none; }
 
   /* ---- app body: map fills everything ---- */
   .app-body {
     display: block;
-    height: calc(100dvh - 52px - 56px); /* below header, above tab bar */
+    height: calc(100dvh - 52px - var(--tab-h));
   }
 
   /* hide the desktop sidebar entirely */
@@ -1153,6 +1160,49 @@ textarea { min-height: 72px; }
     height: 100%;
   }
 
+  /* push leaflet zoom controls above the tab bar */
+  .leaflet-control-zoom {
+    margin-bottom: calc(var(--tab-h) + 12px) !important;
+  }
+
+  /* ---- popups on mobile ---- */
+  .leaflet-popup {
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    margin-left: 0 !important;
+  }
+
+  .leaflet-popup-content-wrapper {
+    left: auto !important;
+    right: auto !important;
+  }
+
+  .leaflet-popup-content {
+    min-width: 240px !important;
+    max-width: calc(100vw - 48px) !important;
+    width: calc(100vw - 48px) !important;
+  }
+
+  /* shrink the starburst badge so it doesn't overflow on small screens */
+  .popup-cat {
+    width: 96px;
+    height: 96px;
+    font-size: 0.65rem;
+    top: -52px;
+    left: -44px;
+    padding: 0 22px;
+  }
+
+  .popup-inner { padding: 2.8rem 0.9rem 0.85rem; }
+
+  .popup-name { font-size: 1rem; }
+  .popup-addr { font-size: 0.72rem; }
+  .popup-desc { font-size: 0.75rem; }
+
+  .popup-tag    { font-size: 0.68rem; padding: 0.2rem 0.5rem; }
+  .popup-source { font-size: 0.65rem; }
+  .popup-link   { font-size: 0.65rem; }
+
   /* ---- mobile bottom tab bar ---- */
   .mobile-bar {
     display: flex;
@@ -1160,7 +1210,8 @@ textarea { min-height: 72px; }
     bottom: 0;
     left: 0;
     right: 0;
-    height: 56px;
+    height: var(--tab-h);
+    padding-bottom: var(--safe-bottom);
     background: var(--paper);
     border-top: var(--border);
     z-index: 500;
@@ -1172,7 +1223,7 @@ textarea { min-height: 72px; }
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 2px;
+    gap: 3px;
     background: none;
     border: none;
     border-right: 2px solid var(--ink);
@@ -1180,22 +1231,23 @@ textarea { min-height: 72px; }
     font-family: 'Space Grotesk', sans-serif;
     padding: 0;
     transition: background 0.1s;
+    min-height: 44px;
   }
   .mobile-tab:last-child { border-right: none; }
-  .mobile-tab:hover      { background: rgba(21,19,15,0.07); }
+  .mobile-tab:active     { background: rgba(21,19,15,0.12); }
   .mobile-tab.active     { background: var(--ink); }
   .mobile-tab.active .mobile-tab-icon,
   .mobile-tab.active .mobile-tab-label { color: var(--paper); }
 
   .mobile-tab-icon {
-    font-size: 1.1rem;
+    font-size: 1.3rem;
     line-height: 1;
     color: var(--ink);
   }
   .mobile-tab-label {
-    font-size: 0.6rem;
+    font-size: 0.65rem;
     font-weight: 700;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
     color: var(--stone);
   }
@@ -1206,9 +1258,9 @@ textarea { min-height: 72px; }
     position: fixed;
     left: 0;
     right: 0;
-    bottom: 56px; /* sits above the tab bar */
+    bottom: var(--tab-h);
     height: 0;
-    max-height: calc(100dvh - 52px - 56px);
+    max-height: calc(100dvh - 52px - var(--tab-h));
     background: var(--paper);
     border-top: var(--border);
     z-index: 400;
@@ -1216,22 +1268,23 @@ textarea { min-height: 72px; }
     transition: height 0.28s cubic-bezier(0.4, 0, 0.2, 1);
   }
   .mobile-sheet.open {
-    height: 55vh;
+    height: 70vh;
   }
 
   .mobile-sheet-handle {
-    width: 36px;
+    width: 40px;
     height: 4px;
     background: rgba(21,19,15,0.25);
-    margin: 0.6rem auto 0;
+    margin: 0.75rem auto 0;
     border-radius: 2px;
     flex-shrink: 0;
   }
 
   .mobile-sheet-content {
-    height: calc(100% - 20px);
+    height: calc(100% - 24px);
     overflow-y: auto;
-    padding: 0.75rem 1rem 1rem;
+    -webkit-overflow-scrolling: touch;
+    padding: 0.75rem 1rem 1.25rem;
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
@@ -1240,17 +1293,24 @@ textarea { min-height: 72px; }
   /* ---- sheet: filter view ---- */
   .mobile-sheet-content .panel-label {
     margin-bottom: 0.4rem;
+    font-size: 0.78rem;
   }
 
   .mobile-sheet-content .tag-pill-list {
     flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .mobile-sheet-content .tag-pill {
+    font-size: 0.78rem;
+    padding: 0.45rem 0.85rem;
   }
 
   .mobile-sheet-content .cat-list {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    gap: 0.3rem;
+    gap: 0.4rem;
     overflow: visible;
     margin: 0;
     padding: 0;
@@ -1258,15 +1318,19 @@ textarea { min-height: 72px; }
 
   .mobile-sheet-content .cat-btn {
     width: auto;
-    padding: 0.35rem 0.6rem;
-    font-size: 0.75rem;
+    padding: 0.45rem 0.7rem;
+    font-size: 0.8rem;
     border: 2px solid var(--ink);
   }
 
   /* ---- sheet: list view ---- */
   .mobile-listings .listing-card {
-    padding: 0.75rem 0;
+    padding: 0.85rem 0;
   }
+
+  .mobile-listings .listing-name { font-size: 0.95rem; }
+  .mobile-listings .listing-addr { font-size: 0.78rem; }
+  .mobile-listings .listing-tag  { font-size: 0.7rem; padding: 0.2rem 0.5rem; }
 
   /* ---- mobile more tray ---- */
   .mobile-more-tray {
@@ -1275,7 +1339,7 @@ textarea { min-height: 72px; }
     position: fixed;
     left: 0;
     right: 0;
-    bottom: 56px; /* sits above tab bar */
+    bottom: var(--tab-h);
     background: var(--paper);
     border-top: var(--border);
     z-index: 450;
@@ -1294,9 +1358,9 @@ textarea { min-height: 72px; }
     gap: 0.75rem;
     font-family: 'Space Grotesk', sans-serif;
     font-weight: 700;
-    font-size: 0.85rem;
+    font-size: 0.95rem;
     letter-spacing: 0.03em;
-    padding: 0.85rem 1.25rem;
+    padding: 1rem 1.25rem;
     background: none;
     border: none;
     border-bottom: 2px solid rgba(21,19,15,0.12);
@@ -1304,30 +1368,47 @@ textarea { min-height: 72px; }
     cursor: pointer;
     text-align: left;
     width: 100%;
+    min-height: 52px;
     transition: background 0.1s;
   }
   .more-tray-btn:last-child { border-bottom: none; }
-  .more-tray-btn:hover { background: rgba(21,19,15,0.06); }
+  .more-tray-btn:active { background: rgba(21,19,15,0.08); }
   .more-tray-btn--add {
     background: var(--flame);
     color: var(--paper);
   }
-  .more-tray-btn--add:hover { background: var(--ink); color: var(--paper); }
+  .more-tray-btn--add:active { background: var(--ink); color: var(--paper); }
 
   .more-tray-icon {
-    font-size: 1rem;
-    width: 1.25rem;
+    font-size: 1.2rem;
+    width: 1.5rem;
     text-align: center;
     flex-shrink: 0;
   }
 
-  /* ---- modal: full-screen on mobile ---- */
-  .modal-backdrop { padding: 0; align-items: flex-end; }
+  /* ---- modal: full-screen bottom sheet on mobile ---- */
+  .modal-backdrop {
+    padding: 0;
+    align-items: flex-end;
+  }
   .modal-outer {
     max-width: 100%;
     max-height: 92dvh;
     box-shadow: none;
     border-top: var(--border);
+    padding-bottom: var(--safe-bottom);
+  }
+
+  /* prevent iOS auto-zoom on input focus (requires font-size >= 16px) */
+  .modal-body input,
+  .modal-body select,
+  .modal-body textarea {
+    font-size: 1rem;
+    padding: 0.6rem 0.75rem;
+  }
+
+  .modal-body label {
+    font-size: 0.8rem;
   }
 }
 
