@@ -456,6 +456,16 @@ header {
 }
 .listing-link:hover { background: var(--flame); color: var(--paper); }
 
+/* value tags (free, low-cost, indie, etc.) — muted outline style */
+.listing-tag.value-tag {
+  background: transparent;
+  color: var(--stone);
+  border-color: rgba(21,19,15,0.3);
+  font-weight: 600;
+  text-transform: lowercase;
+  letter-spacing: 0.03em;
+}
+
 
 /* ============================================================
    COMMONS LINKS PANEL
@@ -608,6 +618,26 @@ header {
   background: var(--flame);
   border: 1.5px solid var(--ink);
   padding: 0.15rem 0.4rem;
+}
+
+/* value tags shown inside the popup (free, indie, etc.) */
+.popup-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-top: 0.5rem;
+}
+
+.popup-tag {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: lowercase;
+  padding: 0.12rem 0.4rem;
+  border: 1.5px solid rgba(21,19,15,0.35);
+  color: var(--stone);
+  background: transparent;
 }
 
 .popup-source {
@@ -909,6 +939,49 @@ textarea { min-height: 72px; }
 
 
 /* ============================================================
+   GEOCODING INDICATOR
+   small non-blocking banner on the map while addresses resolve
+   ============================================================ */
+
+#geo-indicator {
+  position: absolute;
+  bottom: 1.5rem;
+  right: 1rem;
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--paper);
+  border: 2px solid var(--ink);
+  padding: 0.35rem 0.75rem;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  box-shadow: 3px 3px 0 var(--ink);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+#geo-indicator.visible { opacity: 1; }
+
+#geo-indicator-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--sky);
+  flex-shrink: 0;
+  animation: geoPulse 1.2s ease-in-out infinite;
+}
+
+@keyframes geoPulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.25; }
+}
+
+
+/* ============================================================
    TOAST NOTIFICATION
    pops up from the bottom to confirm actions
    ============================================================ */
@@ -935,7 +1008,7 @@ textarea { min-height: 72px; }
 
 
 /* ============================================================
-   TAG PILL FILTERS  (free / low-cost / zero-waste / community)
+   TAG PILL FILTERS  (free / low-cost / etc.)
    ============================================================ */
 
 .panel-tags {

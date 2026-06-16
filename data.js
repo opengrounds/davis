@@ -90,16 +90,18 @@ var SEED_DATA = [
     address: '315 E 14th St, Davis CA 95616',
     link: 'https://yolocountylibrary.org/locations/davis/',
     description: 'full public library with books, DVDs, CDs, and more. free with a library card. open to everyone.',
-    source: 'public',
-    colocated: [
-      {
-        name: 'Davis Makerspace & Clothing Repair Cafe',
-        category: 'tools',
-        description: 'community makerspace and repair cafe, co-hosted at the library. bring projects, clothing, electronics, or household items — tools available, staff and volunteers on hand to help. supervised children welcome; signed liability waiver required (available on site).',
-        hours: 'mon & tue 6–8p · thu 9:30–11:30a',
-        link: 'https://artsalliancedavis.org/event/davis-makerspace-clothing-repair-cafe-340/'
-      }
-    ]
+    source: 'public'
+  },
+  {
+    id: 's4b',
+    name: 'Davis Makerspace & Clothing Repair Cafe',
+    category: 'tools',
+    lat: 38.556916, lng: -121.747034,
+    geocodeAddress: null,
+    address: '315 E 14th St, Davis CA 95616 (inside the library)',
+    link: 'https://artsalliancedavis.org/event/davis-makerspace-clothing-repair-cafe-340/',
+    description: 'community makerspace and repair cafe inside the library. bring projects, clothing, electronics, or household items. tools available, staff and volunteers on hand to help. supervised children welcome with a signed liability waiver (available on site). mon and tue 6-8pm, thu 9:30-11:30am.',
+    source: 'public'
   },
 
   {
@@ -143,15 +145,18 @@ var SEED_DATA = [
     address: '622 Cantrill Dr, Davis CA 95618',
     link: 'https://www.communitymercdavis.org/',
     description: 'nonprofit reuse store and tool lending library. housewares, furniture, tools, fabric, and more, diverted from the landfill. open thu-sun.',
-    source: 'public',
-    colocated: [
-      {
-        name: 'Community Mercantile',
-        category: 'tools',
-        description: 'tool lending library co-located with the reuse store. borrow tools for home, garden, bike repair, and more. open thu-sun during reuse store hours.',
-        link: 'https://www.communitymercdavis.org/library-catalog/'
-      }
-    ]
+    source: 'public'
+  },
+  {
+    id: 's8b',
+    name: 'Community Mercantile Tool Lending Library',
+    category: 'tools',
+    lat: 38.5493, lng: -121.7194,
+    geocodeAddress: null,
+    address: '622 Cantrill Dr, Davis CA 95618 (inside Community Mercantile)',
+    link: 'https://www.communitymercdavis.org/library-catalog/',
+    description: 'tool lending library inside the Community Mercantile reuse store. borrow tools for home, garden, bike repair, and more. open thu-sun during reuse store hours.',
+    source: 'public'
   },
   {
     id: 's9',
@@ -205,7 +210,7 @@ var SEED_DATA = [
     geocodeAddress: '1221 4th Street, Davis, CA',
     address: '1221 1/2 4th St, Davis CA 95616',
     link: 'https://davisbikecollective.org',
-    description: 'volunteer-run nonprofit bike shop. pay-what-you-can repairs, free parts library, and DIY stands. open drop-in hours most evenings and weekends.',
+    description: 'volunteer-run nonprofit bike shop. low-cost repairs, free parts library, and DIY stands. open drop-in hours most evenings and weekends.',
     source: 'public'
   },
   {
@@ -450,7 +455,7 @@ var ADDRESS_DATA = [
     address: '1200 Extension Center Cir, Davis CA 95616',
     geocodeAddress: '1200 Extension Center Cir, Davis, CA',
     link: null,
-    description: 'no donations — only the Student Farm stocks this freedge, but anyone can take food from it. usually well stocked with produce through the week.',
+    description: 'only the Student Farm stocks this freedge, but anyone can take food from it. usually well stocked with produce through the week.',
     source: 'community',
     status: 'open weekdays 8am-5pm'
   },
@@ -488,7 +493,7 @@ var ADDRESS_DATA = [
     address: 'Plant and Environmental Sciences Building, UC Davis',
     geocodeAddress: '387 N Quad, Davis, CA',
     link: 'https://ediblecampus.ucdavis.edu/gardens/sbg',
-    description: 'student-run edible landscape outside the Plant and Environmental Sciences building, growing since 2008. pick your own salad greens and veggies — open to anyone on campus.',
+    description: 'student-run edible landscape outside the Plant and Environmental Sciences building, growing since 2008. pick your own salad greens and veggies. open to anyone on campus.',
     source: 'public'
   },
   {
@@ -523,7 +528,7 @@ var ADDRESS_DATA = [
     address: '1102 Petra Ct, Davis CA 95618',
     geocodeAddress: '1102 Petra Ct, Davis, CA',
     link: null,
-    description: 'little free library paired with a produce-sharing basket — take a book, take some extra produce.',
+    description: 'little free library paired with a produce-sharing basket. take a book, take some extra produce.',
     source: 'community'
   },
   {
@@ -1126,8 +1131,9 @@ var ADDRESS_DATA = [
     address: '1111 H St, Davis CA 95616',
     geocodeAddress: '1111 H St Davis CA',
     link: 'https://www.daviscommunitymeals.org',
-    description: 'free hot meals served daily to anyone in need. Paul\'s Place provides meals, emergency shelter referrals, and community support. no questions asked.',
-    source: 'public'
+    description: 'free hot meals served daily to anyone in need. run by volunteers and staff. also provides emergency shelter referrals and community support. no questions asked.',
+    source: 'public',
+    tags: ['free', 'volunteer', 'community']
   },
   {
     id: 's94',
@@ -1137,8 +1143,9 @@ var ADDRESS_DATA = [
     address: '640 Hawthorn Ln, Davis CA 95616',
     geocodeAddress: '640 Hawthorn Lane Davis CA',
     link: null,
-    description: 'community meal program open to all. check with the church for current schedule and available services.',
-    source: 'community'
+    description: 'volunteer-run community meal program open to all. check with the church for current schedule.',
+    source: 'community',
+    tags: ['free', 'volunteer', 'community']
   },
 
 
@@ -1283,7 +1290,7 @@ var ADDRESS_DATA = [
     id: 's106',
     name: 'KDRT 95.7 FM — Low Power Community Radio',
     category: 'entertain',
-    lat: 38.54894070087835, lng: -121.73145067648079,
+    lat: 38.54901092239584, lng: -121.73150951539181,
     address: '1623 5th St Suite A, Davis CA 95616',
     geocodeAddress: null,
     link: 'https://kdrt.org',
@@ -1312,7 +1319,91 @@ var ADDRESS_DATA = [
     address: 'Davis, CA (neighborhood groups — no fixed location)',
     geocodeAddress: null,
     link: 'https://www.facebook.com/groups/buynothingdavis/',
-    description: 'hyperlocal gift economy operating through neighborhood Facebook groups. give and receive household goods, food, skills, and time — completely free, no trading. find your neighborhood group at buynothingproject.org.',
+    description: 'hyperlocal gift economy on Facebook. give and receive household goods, food, skills, and time, completely free with no trading. find your neighborhood group at buynothingproject.org.',
     source: 'community'
+  },
+
+  // -------- parks / disc golf --------
+
+  {
+    id: 's109',
+    name: 'Oxford Circle Park — Disc Golf',
+    category: 'parks',
+    lat: 38.547581, lng: -121.765590,
+    address: 'Oxford Cir, Davis CA 95616',
+    geocodeAddress: null,
+    link: 'https://www.cityofdavis.org/city-hall/parks-and-community-services/parks-and-open-space',
+    description: 'west Davis park with a free 9-hole disc golf course. open daily. bring your own discs.',
+    source: 'public'
+  },
+
+  // -------- nature --------
+
+  {
+    id: 's110',
+    name: 'Mace Ranch Habitat Areas',
+    category: 'parks',
+    lat: 38.557739, lng: -121.707988,
+    address: 'Cowell Blvd at Mace Blvd, Davis CA 95618',
+    geocodeAddress: null,
+    link: 'https://www.cityofdavis.org/city-hall/parks-and-community-services/parks-and-open-space',
+    description: 'protected natural open space in east Davis. walking paths through native grassland and riparian habitat. good for birdwatching. free and open daily.',
+    source: 'public'
+  },
+
+  // -------- entertainment --------
+
+  {
+    id: 's111',
+    name: 'Davis Arts Center',
+    category: 'entertain',
+    lat: 38.560332, lng: -121.745245,
+    address: '1919 F St, Davis CA 95616',
+    geocodeAddress: null,
+    link: 'https://davisartscenter.org',
+    description: 'nonprofit arts center next to Community Park. gallery exhibitions are free and open to the public. low-cost classes and workshops also available. check their calendar for free opening receptions.',
+    source: 'public'
+  },
+
+  {
+    id: 's112',
+    name: 'Varsity Theatre',
+    category: 'entertain',
+    lat: 38.54414, lng: -121.74056,
+    address: '616 2nd St, Davis CA 95616',
+    geocodeAddress: null,
+    link: 'https://www.varsitytheatredavis.com',
+    description: 'single-screen independent cinema in downtown Davis, open since 1950. affordable tickets. check the website for showtimes and occasional community screenings.',
+    source: 'public',
+    tags: ['low-cost', 'indie', 'community']
+  },
+
+  // -------- indie / secondhand / sustainable --------
+
+  {
+    id: 's113',
+    name: 'Logos Books & Records',
+    category: 'thrift',
+    lat: 38.543184, lng: -121.741955,
+    address: '513 2nd St, Davis CA 95616',
+    geocodeAddress: null,
+    link: null,
+    description: 'used bookstore and record shop in downtown Davis, open since 1969. secondhand books, vinyl, and local zines at low prices.',
+    source: 'public',
+    tags: ['secondhand', 'indie', 'low-cost', 'community']
+  },
+
+  // -------- community garden --------
+
+  {
+    id: 's114',
+    name: 'Grande Avenue Community Garden',
+    category: 'garden',
+    lat: 38.568911, lng: -121.749800,
+    address: '300 Grande Ave, Davis CA 95616',
+    geocodeAddress: '300 Grande Ave, Davis, CA',
+    link: 'https://cityofdavis.org/city-hall/parks-community-services/parks-open-space/community-gardens',
+    description: 'city-run community garden on Grande Ave in north Davis. annual plot rental fee covers land, water, and basic maintenance. apply through the city parks department.',
+    source: 'public'
   }
 ];

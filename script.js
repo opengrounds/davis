@@ -48,22 +48,24 @@ var activeCategory = 'all'; // which category filter is selected
 var activeTags     = {};     // which value tags are toggled: { free: true, ... }
 var allPlaces      = SEED_DATA.concat(ADDRESS_DATA); // working array — seed + API results
 
-// map each category to which value tags apply
+// map each category to default value tags.
+// individual places can override with a `tags` array field.
 var CATEGORY_TAGS = {
-  garden:   ['free', 'zero-waste', 'community'],
-  parks:    ['free', 'community'],
-  fridge:   ['free', 'community'],
+  fridge:   ['free', 'donation', 'community'],
+  pantry:   ['free', 'donation', 'community'],
   commun:   ['free', 'community'],
-  entertain:['low-cost', 'community'],
-  coop:     ['low-cost', 'zero-waste', 'community'],
-  pantry:   ['free', 'community'],
+  mutual:   ['free', 'donation', 'community'],
   lolib:    ['free', 'community'],
   library:  ['free', 'community'],
-  tools:    ['free', 'zero-waste', 'community'],
-  thrift:   ['low-cost', 'zero-waste'],
-  foraging: ['free', 'zero-waste'],
-  bikes:    ['free', 'zero-waste', 'community'],
-  mutual:   ['free', 'community'],
+  foraging: ['free'],
+  garden:   ['free', 'community'],
+  parks:    ['free', 'community'],
+  bikes:    ['free', 'volunteer', 'community'],
+  tools:    ['free', 'community'],
+  market:   ['free', 'community'],
+  coop:     ['low-cost', 'indie', 'community'],
+  thrift:   ['low-cost', 'secondhand', 'community'],
+  entertain:['low-cost', 'indie', 'community'],
   other:    ['community']
 };
 
@@ -242,9 +244,12 @@ function buildFilters() {
 
 var TAG_DEFS = [
   { id: 'free',       label: 'free' },
+  { id: 'donation',   label: 'donation-based' },
   { id: 'low-cost',   label: 'low-cost' },
-  { id: 'zero-waste', label: 'zero-waste' },
-  { id: 'community',  label: 'community' }
+  { id: 'volunteer',  label: 'volunteer run' },
+  { id: 'indie',      label: 'indie / locally owned' },
+  { id: 'secondhand', label: 'secondhand / reuse' },
+  { id: 'community',  label: 'community-run' }
 ];
 
 function buildTagFilters(containerEl) {
@@ -297,9 +302,10 @@ function getFiltered() {
 
     if (activeCategory !== 'all' && p.category !== activeCategory) continue;
 
-    // tag filter: place must match ALL active tags
+    // tag filter: place must match ALL active tags.
+    // prefer the place's own `tags` array; fall back to category defaults.
     if (tagKeys.length > 0) {
-      var placeTags = CATEGORY_TAGS[p.category] || [];
+      var placeTags = (p.tags && p.tags.length) ? p.tags : (CATEGORY_TAGS[p.category] || []);
       var match = true;
       for (var t = 0; t < tagKeys.length; t++) {
         if (placeTags.indexOf(tagKeys[t]) === -1) { match = false; break; }
@@ -362,29 +368,23 @@ function renderMarkers() {
       statusHtml = '<div class="popup-status">' + place.status + '</div>';
     }
 
-    // co-located places — shown as stacked sub-sections in the popup
-    var colocatedHtml = '';
-    if (place.colocated && place.colocated.length) {
-      for (var c = 0; c < place.colocated.length; c++) {
-        var co = place.colocated[c];
-        var coLink = co.link
-          ? '<a href="' + co.link + '" target="_blank" class="popup-link">visit site</a>'
-          : '';
-        var coHours = co.hours
-          ? '<div class="popup-status">' + co.hours + '</div>'
-          : '';
-        colocatedHtml +=
-          '<div class="popup-colocated">' +
-            '<div class="popup-co-name">' +
-              '<span class="popup-cat" style="--cat-color:' + catColor(co.category) + '">' + catLabel(co.category) + '</span>' +
-              co.name +
-            '</div>' +
-            '<div class="popup-desc">' + (co.description || '') + '</div>' +
-            coHours +
-            (coLink ? '<div class="popup-footer">' + coLink + '</div>' : '') +
-          '</div>';
+    // value tags — use per-place tags if set, else category defaults
+    var placeTags = (place.tags && place.tags.length) ? place.tags : (CATEGORY_TAGS[place.category] || []);
+    var tagsHtml = '';
+    if (placeTags.length > 0) {
+      var pillsHtml = '';
+      for (var t = 0; t < placeTags.length; t++) {
+        var tagId = placeTags[t];
+        var tagLabel = tagId;
+        for (var td = 0; td < TAG_DEFS.length; td++) {
+          if (TAG_DEFS[td].id === tagId) { tagLabel = TAG_DEFS[td].label; break; }
+        }
+        pillsHtml += '<span class="popup-tag">' + tagLabel + '</span>';
       }
+      tagsHtml = '<div class="popup-tags">' + pillsHtml + '</div>';
     }
+
+    var colocatedHtml = '';
 
     var popupContent =
       '<div class="popup-inner">' +
@@ -393,6 +393,7 @@ function renderMarkers() {
         addrHtml +
         descHtml +
         statusHtml +
+        tagsHtml +
         colocatedHtml +
         '<div class="popup-footer">' +
           '<span class="popup-source">via ' + sourceLabel + '</span>' +
@@ -441,19 +442,19 @@ function renderListings() {
       linkTag = '<a class="listing-tag listing-link" href="' + place.link + '" target="_blank" onclick="event.stopPropagation()">website</a>';
     }
 
-    var colocatedCardHtml = '';
-    if (place.colocated && place.colocated.length) {
-      colocatedCardHtml += '<div class="listing-colocated">';
-      for (var c = 0; c < place.colocated.length; c++) {
-        var co = place.colocated[c];
-        colocatedCardHtml +=
-          '<div class="listing-co-row">' +
-            '<span class="listing-tag" style="background:' + catColor(co.category) + ';color:#F7F4EC">' + catLabel(co.category) + '</span>' +
-            '<span class="listing-co-name">' + co.name + '</span>' +
-          '</div>';
+    // value tags
+    var placeTagsL = (place.tags && place.tags.length) ? place.tags : (CATEGORY_TAGS[place.category] || []);
+    var valueTagsHtml = '';
+    for (var vt = 0; vt < placeTagsL.length; vt++) {
+      var vtId = placeTagsL[vt];
+      var vtLabel = vtId;
+      for (var vtd = 0; vtd < TAG_DEFS.length; vtd++) {
+        if (TAG_DEFS[vtd].id === vtId) { vtLabel = TAG_DEFS[vtd].label; break; }
       }
-      colocatedCardHtml += '</div>';
+      valueTagsHtml += '<span class="listing-tag value-tag">' + vtLabel + '</span>';
     }
+
+    var colocatedCardHtml = '';
 
     var card = document.createElement('div');
     card.className = 'listing-card';
@@ -465,6 +466,7 @@ function renderListings() {
         '<div class="listing-tags">' +
           '<span class="listing-tag" style="background:' + catColor(place.category) + ';color:#F7F4EC">' + catLabel(place.category) + '</span>' +
           statusTag +
+          valueTagsHtml +
           linkTag +
         '</div>' +
         colocatedCardHtml +
@@ -742,8 +744,16 @@ async function loadAll() {
   setStatus('done!');
   setLoading(100);
 
-  // geocode in the background — silently updates pins as coords resolve
-  geocodeSeedData(allPlaces, function() {
+  // geocode in the background — updates pins as coords resolve, shows a small indicator
+  var geoEl     = document.querySelector('#geo-indicator');
+  var geoTextEl = document.querySelector('#geo-indicator-text');
+  if (geoEl) geoEl.classList.add('visible');
+
+  geocodeSeedData(allPlaces, function(done, total) {
+    if (geoTextEl) geoTextEl.textContent = 'placing ' + done + ' of ' + total + ' addresses...';
+    if (done >= total && geoEl) {
+      geoEl.classList.remove('visible');
+    }
     buildFilters();
     renderMarkers();
     renderListings();
@@ -1164,6 +1174,17 @@ function renderMobileListings() {
     var statusTag = place.status ? '<span class="listing-tag status">' + place.status + '</span>' : '';
     var linkTag = place.link ? '<a class="listing-tag listing-link" href="' + place.link + '" target="_blank" onclick="event.stopPropagation()">website</a>' : '';
 
+    var placeTagsM = (place.tags && place.tags.length) ? place.tags : (CATEGORY_TAGS[place.category] || []);
+    var mobileValueTagsHtml = '';
+    for (var mt = 0; mt < placeTagsM.length; mt++) {
+      var mtId = placeTagsM[mt];
+      var mtLabel = mtId;
+      for (var mtd = 0; mtd < TAG_DEFS.length; mtd++) {
+        if (TAG_DEFS[mtd].id === mtId) { mtLabel = TAG_DEFS[mtd].label; break; }
+      }
+      mobileValueTagsHtml += '<span class="listing-tag value-tag">' + mtLabel + '</span>';
+    }
+
     var card = document.createElement('div');
     card.className = 'listing-card';
     card.innerHTML =
@@ -1173,7 +1194,7 @@ function renderMobileListings() {
         addrHtml +
         '<div class="listing-tags">' +
           '<span class="listing-tag" style="background:' + catColor(place.category) + ';color:#F7F4EC">' + catLabel(place.category) + '</span>' +
-          statusTag + linkTag +
+          statusTag + mobileValueTagsHtml + linkTag +
         '</div>' +
       '</div>';
 
