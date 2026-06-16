@@ -1446,3 +1446,362 @@ textarea { min-height: 72px; }
   transform: translateY(-2px);
   box-shadow: 0 3px 0 rgba(21,19,15,0.12);
 }
+
+/* ============================================================
+   MODAL REDESIGN — add a place / correction / about
+   ============================================================ */
+
+/* wider max-width for the richer modals */
+.modal-outer--add,
+.modal-outer--correction { max-width: 520px; }
+.modal-outer--about      { max-width: 480px; }
+
+/* required field asterisk */
+.form-req {
+  color: var(--flame);
+  font-weight: 700;
+}
+
+/* inline hint that sits after the label text */
+.form-hint-inline {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.6rem;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0;
+  font-style: italic;
+  color: var(--stone);
+}
+
+/* side-by-side form row */
+.form-row {
+  display: flex;
+  gap: 0.65rem;
+}
+
+/* full-width submit button */
+.btn-submit {
+  width: 100%;
+  margin-top: 0.25rem;
+  justify-content: center;
+}
+
+/* --- ADD A PLACE header --- */
+.modal-header--add {
+  background: var(--flame);
+  color: var(--paper);
+  padding: 1.25rem 1.5rem;
+  border-bottom: var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-shrink: 0;
+}
+
+.modal-header--add .modal-title {
+  color: var(--paper);
+  font-size: 1.5rem;
+  letter-spacing: -0.03em;
+}
+
+.modal-header--add .modal-close {
+  color: var(--paper);
+  opacity: 0.7;
+  font-size: 1.1rem;
+  margin-top: 2px;
+}
+.modal-header--add .modal-close:hover { opacity: 1; color: var(--paper); }
+
+/* eyebrow line above the title */
+.modal-eyebrow {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  opacity: 0.8;
+  margin-bottom: 0.3rem;
+}
+
+/* --- Category select grid (replaces <select>) --- */
+.cat-select-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 0.35rem;
+  margin-top: 0.2rem;
+}
+
+.cat-select-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.45rem 0.6rem;
+  border: 2px solid rgba(21,19,15,0.2);
+  background: var(--paper-dim);
+  color: var(--ink);
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 0.1s, background 0.1s, color 0.1s;
+  position: relative;
+}
+
+/* colored left stripe using the CSS var --c set inline */
+.cat-select-btn::before {
+  content: '';
+  display: block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--c, #718096);
+  border: 1.5px solid var(--ink);
+  flex-shrink: 0;
+}
+
+.cat-select-btn:hover {
+  border-color: var(--c, var(--ink));
+  background: var(--paper);
+}
+
+.cat-select-btn.active {
+  background: var(--c, var(--ink));
+  border-color: var(--ink);
+  color: var(--paper);
+}
+.cat-select-btn.active::before {
+  background: var(--paper);
+  border-color: var(--paper);
+}
+
+/* --- Value tag checkboxes --- */
+.tag-check-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-top: 0.2rem;
+}
+
+.tag-check {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 0.3rem 0.6rem;
+  border: 2px solid rgba(21,19,15,0.2);
+  background: var(--paper-dim);
+  cursor: pointer;
+  transition: border-color 0.1s, background 0.1s;
+  text-transform: none;
+  letter-spacing: 0;
+  /* override the global label styles */
+  display: inline-flex;
+  margin-bottom: 0;
+}
+
+.tag-check input[type="checkbox"] {
+  width: auto;
+  margin: 0;
+  accent-color: var(--grass);
+  cursor: pointer;
+}
+
+.tag-check:has(input:checked) {
+  border-color: var(--grass);
+  background: var(--grass-tint);
+}
+
+/* --- CORRECTION header --- */
+.modal-header--correction {
+  background: var(--sky);
+  color: var(--paper);
+  padding: 1.25rem 1.5rem;
+  border-bottom: var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-shrink: 0;
+}
+
+.modal-header--correction .modal-title {
+  color: var(--paper);
+  font-size: 1.35rem;
+  letter-spacing: -0.02em;
+}
+
+.modal-header--correction .modal-close {
+  color: var(--paper);
+  opacity: 0.7;
+  font-size: 1.1rem;
+}
+.modal-header--correction .modal-close:hover { opacity: 1; color: var(--paper); }
+
+/* correction type picker */
+.correction-type-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 0.35rem;
+  margin-bottom: 1rem;
+}
+
+.corr-type-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 0.65rem 0.5rem;
+  border: 2px solid rgba(21,19,15,0.2);
+  background: var(--paper-dim);
+  color: var(--ink);
+  cursor: pointer;
+  text-align: center;
+  transition: border-color 0.1s, background 0.1s, color 0.1s;
+}
+
+.corr-type-icon {
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+.corr-type-btn:hover  { border-color: var(--sky); background: var(--sky-tint); }
+.corr-type-btn.active { background: var(--sky); border-color: var(--ink); color: var(--paper); }
+
+/* sky-colored submit button for corrections */
+.btn-correction {
+  background: var(--sky);
+  color: var(--paper);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+.btn-correction:hover  { background: var(--ink); }
+.btn-correction:active { box-shadow: 1px 1px 0 var(--ink); }
+
+/* --- ABOUT header --- */
+.modal-header--about {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 2rem 1.75rem 1.5rem;
+  border-bottom: var(--border);
+  position: relative;
+  flex-shrink: 0;
+}
+
+.about-hero-wordmark {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  font-size: 2.2rem;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: var(--paper);
+}
+.about-hero-wordmark .punct { font-weight: 100; color: var(--flame); }
+.about-hero-wordmark .ital  { font-weight: 100; font-style: italic; color: var(--pink); }
+
+.about-hero-sub {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(247,244,236,0.6);
+  margin-top: 0.5rem;
+}
+
+.about-hero-loc {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--flame);
+  margin-top: 0.25rem;
+}
+
+.modal-close--about {
+  position: absolute;
+  top: 1rem;
+  right: 1.25rem;
+  color: rgba(247,244,236,0.5);
+  font-size: 1rem;
+}
+.modal-close--about:hover { color: var(--paper); }
+
+/* about body */
+.about-divider {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 1rem 0 0.6rem;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--stone);
+}
+.about-divider::before,
+.about-divider::after {
+  content: '';
+  flex: 1;
+  height: 1.5px;
+  background: rgba(21,19,15,0.15);
+}
+
+.about-sources {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.about-source-pill {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 0.3rem 0.65rem;
+  border: 2px solid var(--ink);
+  color: var(--ink);
+  text-decoration: none;
+  transition: background 0.1s, color 0.1s;
+}
+.about-source-pill:hover { background: var(--ink); color: var(--paper); }
+.about-source-pill--you {
+  background: var(--flame);
+  color: var(--paper);
+  border-color: var(--ink);
+  cursor: default;
+}
+.about-source-pill--you:hover { background: var(--pink); }
+
+.about-byline {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.about-byline-name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--flame);
+  text-decoration: none;
+  letter-spacing: -0.01em;
+}
+.about-byline-name:hover { text-decoration: underline; }
+
+.about-byline-meta {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.62rem;
+  color: var(--stone);
+}
+
+/* --- Mobile adjustments for redesigned modals --- */
+@media (max-width: 640px) {
+  .cat-select-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .correction-type-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .about-hero-wordmark { font-size: 1.7rem; }
+  .form-row { flex-direction: column; gap: 0; }
+}

@@ -1,3 +1,47 @@
+/* ============================================================
+   MODAL INTERACTIVE BUTTON WIRING
+   category picker grid + correction type picker
+   ============================================================ */
+
+// Wire up the category select buttons in the add-a-place form.
+// Called once on DOMContentLoaded.
+function initModalButtons() {
+  // category grid
+  document.querySelectorAll('#f-cat-grid .cat-select-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('#f-cat-grid .cat-select-btn').forEach(function(b) {
+        b.classList.remove('active');
+      });
+      btn.classList.add('active');
+      document.querySelector('#f-cat').value = btn.dataset.value;
+    });
+  });
+
+  // correction type grid
+  document.querySelectorAll('#c-type-grid .corr-type-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('#c-type-grid .corr-type-btn').forEach(function(b) {
+        b.classList.remove('active');
+      });
+      btn.classList.add('active');
+      document.querySelector('#c-type').value = btn.dataset.value;
+    });
+  });
+
+  // close modals on backdrop click
+  ['submit-modal', 'correction-modal', 'about-modal'].forEach(function(id) {
+    var el = document.querySelector('#' + id);
+    if (!el) return;
+    el.addEventListener('click', function(e) {
+      if (e.target === el) {
+        el.classList.remove('open');
+      }
+    });
+  });
+}
+
+document.addEventListener('DOMContentLoaded', initModalButtons);
+
 /*
   open:grounds — script.js
   a citizen map of shared resources in davis, ca
@@ -938,7 +982,7 @@ function showToast(msg) {
 
 async function submitPlace() {
   var name    = document.querySelector('#f-name').value.trim();
-  var cat     = document.querySelector('#f-cat').value;
+  var cat     = document.querySelector('#f-cat').value;  // set by cat-select-btn clicks
   var addr    = document.querySelector('#f-addr').value.trim();
   var desc    = document.querySelector('#f-desc').value.trim();
   var link    = document.querySelector('#f-link').value.trim();
@@ -947,6 +991,11 @@ async function submitPlace() {
   var lngRaw  = document.querySelector('#f-lng').value.trim();
   var lat     = latRaw ? parseFloat(latRaw) : null;
   var lng     = lngRaw ? parseFloat(lngRaw) : null;
+
+  // collect checked value tags
+  var tagBoxes = document.querySelectorAll('input[name="f-tags"]:checked');
+  var tags = [];
+  for (var i = 0; i < tagBoxes.length; i++) tags.push(tagBoxes[i].value);
 
   // basic validation — need at least a name, type, and some location info
   if (!name || !cat || (!addr && !lat)) {
@@ -968,6 +1017,7 @@ async function submitPlace() {
         address:     addr,
         description: desc,
         link:        link,
+        tags:        tags,
         submittedBy: contact,
         status:      'pending', // maintainer reviews before it goes live
         lat:         lat,
@@ -983,6 +1033,8 @@ async function submitPlace() {
         document.querySelector('#' + fields[i]).value = '';
       }
       document.querySelector('#f-cat').value = '';
+      document.querySelectorAll('input[name="f-tags"]').forEach(function(cb) { cb.checked = false; });
+      document.querySelectorAll('#f-cat-grid .cat-select-btn').forEach(function(b) { b.classList.remove('active'); });
       showToast('submitted. thanks for adding to the commons.');
     } else {
       showToast('something went wrong. try again?');
@@ -1000,8 +1052,9 @@ async function submitPlace() {
 
 async function submitCorrection() {
   var name    = document.querySelector('#c-name').value.trim();
-  var type    = document.querySelector('#c-type').value;
+  var type    = document.querySelector('#c-type').value;  // set by corr-type-btn clicks
   var details = document.querySelector('#c-details').value.trim();
+  var email   = document.querySelector('#c-email').value.trim();
   var latRaw  = document.querySelector('#c-lat').value.trim();
   var lngRaw  = document.querySelector('#c-lng').value.trim();
 
@@ -1025,6 +1078,7 @@ async function submitCorrection() {
         placeName:      name,
         correctionType: type,
         details:        details,
+        email:          email || null,
         lat:            latRaw || null,
         lng:            lngRaw || null,
         status:         'pending'
@@ -1033,11 +1087,12 @@ async function submitCorrection() {
 
     if (res.ok) {
       closeCorrection();
-      var fields = ['c-name', 'c-details', 'c-lat', 'c-lng'];
+      var fields = ['c-name', 'c-details', 'c-lat', 'c-lng', 'c-email'];
       for (var i = 0; i < fields.length; i++) {
         document.querySelector('#' + fields[i]).value = '';
       }
       document.querySelector('#c-type').value = '';
+      document.querySelectorAll('#c-type-grid .corr-type-btn').forEach(function(b) { b.classList.remove('active'); });
       showToast('correction sent. thanks for keeping the map accurate.');
     } else {
       showToast('something went wrong. try again?');

@@ -180,54 +180,74 @@
        MODAL — ADD A PLACE
        ============================================================ -->
   <div class="modal-backdrop" id="submit-modal">
-    <div class="modal-outer">
+    <div class="modal-outer modal-outer--add">
       <div class="modal">
 
-        <div class="modal-header">
-          <span class="modal-title">add a place</span>
-          <button class="modal-close" onclick="closeSubmit()">x</button>
+        <div class="modal-header modal-header--add">
+          <div class="modal-header-inner">
+            <div class="modal-eyebrow">contribute to the commons</div>
+            <span class="modal-title">+ add a place</span>
+          </div>
+          <button class="modal-close" onclick="closeSubmit()">&#x2715;</button>
         </div>
 
         <div class="modal-body">
 
           <div class="form-group">
-            <label>name of place</label>
+            <label>name of place <span class="form-req">*</span></label>
             <input type="text" id="f-name" placeholder="e.g. 5th Street Community Garden">
           </div>
 
           <div class="form-group">
-            <label>type</label>
-            <select id="f-cat">
-              <option value="">choose one</option>
-              <option value="garden">community garden</option>
-              <option value="fridge">community fridge / freedge</option>
-              <option value="coop">food co-op</option>
-              <option value="pantry">free pantry / blessing box</option>
-              <option value="seeds">seed library</option>
-              <option value="library">little free library</option>
-              <option value="tools">tool library / repair cafe</option>
-              <option value="thrift">thrift and reuse store</option>
-              <option value="foraging">foraging spot</option>
-              <option value="bikes">bike repair station</option>
-              <option value="mutual">mutual aid / free store</option>
-              <option value="other">other commons</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label>
-              coordinates
-              <span style="font-weight:400;text-transform:none;letter-spacing:0;font-style:italic;color:var(--stone)">(preferred when possible)</span>
-            </label>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem">
-              <input type="text" id="f-lat" placeholder="lat e.g. 38.5449">
-              <input type="text" id="f-lng" placeholder="lng e.g. -121.7399">
+            <label>type <span class="form-req">*</span></label>
+            <div class="cat-select-grid" id="f-cat-grid">
+              <button type="button" class="cat-select-btn" data-value="fridge"    style="--c:#2F9BD6">community fridge</button>
+              <button type="button" class="cat-select-btn" data-value="pantry"    style="--c:#ff9d00">free pantry</button>
+              <button type="button" class="cat-select-btn" data-value="commun"    style="--c:#E53E3E">community meals</button>
+              <button type="button" class="cat-select-btn" data-value="coop"      style="--c:#e2c221">food co-op</button>
+              <button type="button" class="cat-select-btn" data-value="garden"    style="--c:#38A169">community garden</button>
+              <button type="button" class="cat-select-btn" data-value="market"    style="--c:#c22fb8">farmers market</button>
+              <button type="button" class="cat-select-btn" data-value="foraging"  style="--c:#A855F7">foraging</button>
+              <button type="button" class="cat-select-btn" data-value="lolib"     style="--c:#beb129">local library</button>
+              <button type="button" class="cat-select-btn" data-value="library"   style="--c:#FF3E86">little free library</button>
+              <button type="button" class="cat-select-btn" data-value="bikes"     style="--c:#4F6BFF">bike repair</button>
+              <button type="button" class="cat-select-btn" data-value="tools"     style="--c:#00A3C4">tool / repair</button>
+              <button type="button" class="cat-select-btn" data-value="thrift"    style="--c:#805AD5">thrift &amp; reuse</button>
+              <button type="button" class="cat-select-btn" data-value="parks"     style="--c:#154736">community parks</button>
+              <button type="button" class="cat-select-btn" data-value="entertain" style="--c:#FF5722">arts &amp; media</button>
+              <button type="button" class="cat-select-btn" data-value="mutual"    style="--c:#84CC16">mutual aid</button>
+              <button type="button" class="cat-select-btn" data-value="other"     style="--c:#718096">other commons</button>
             </div>
-            <p class="form-hint">coordinates place the pin precisely. find them on google maps by right-clicking the spot.</p>
+            <input type="hidden" id="f-cat">
           </div>
 
           <div class="form-group">
-            <label>address or cross streets</label>
+            <label>values <span class="form-hint-inline">check all that apply</span></label>
+            <div class="tag-check-grid">
+              <label class="tag-check"><input type="checkbox" name="f-tags" value="free">free</label>
+              <label class="tag-check"><input type="checkbox" name="f-tags" value="donation">donation-based</label>
+              <label class="tag-check"><input type="checkbox" name="f-tags" value="low-cost">low-cost</label>
+              <label class="tag-check"><input type="checkbox" name="f-tags" value="volunteer">volunteer run</label>
+              <label class="tag-check"><input type="checkbox" name="f-tags" value="indie">indie / local</label>
+              <label class="tag-check"><input type="checkbox" name="f-tags" value="secondhand">secondhand</label>
+              <label class="tag-check"><input type="checkbox" name="f-tags" value="community">community-run</label>
+              <label class="tag-check"><input type="checkbox" name="f-tags" value="sharing">sharing-based</label>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group" style="flex:1">
+              <label>lat <span class="form-hint-inline">right-click on google maps</span></label>
+              <input type="text" id="f-lat" placeholder="38.5449">
+            </div>
+            <div class="form-group" style="flex:1">
+              <label>lng</label>
+              <input type="text" id="f-lng" placeholder="-121.7399">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>address or cross streets <span class="form-req">*</span> <span class="form-hint-inline">if no coordinates</span></label>
             <input type="text" id="f-addr" placeholder="e.g. 5th and L St, Davis CA">
           </div>
 
@@ -237,17 +257,16 @@
           </div>
 
           <div class="form-group">
-            <label>link (optional)</label>
+            <label>link <span class="form-hint-inline">optional — website, instagram, google maps</span></label>
             <input type="url" id="f-link" placeholder="https://">
-            <p class="form-hint">instagram, website, google maps link, etc.</p>
           </div>
 
           <div class="form-group">
-            <label>your name or handle (optional)</label>
-            <input type="text" id="f-contact" placeholder="for credit">
+            <label>your name or handle <span class="form-hint-inline">optional — for credit</span></label>
+            <input type="text" id="f-contact" placeholder="@handle or name">
           </div>
 
-          <button class="btn btn-add" style="width:100%;margin-top:0.25rem" onclick="submitPlace()">submit for review</button>
+          <button class="btn btn-add btn-submit" onclick="submitPlace()">submit for review &#x2192;</button>
           <p class="submit-note">submissions are reviewed before going live. thanks for helping map the commons.</p>
 
         </div><!-- /modal-body -->
@@ -260,55 +279,71 @@
        MODAL — SUGGEST A CORRECTION
        ============================================================ -->
   <div class="modal-backdrop" id="correction-modal">
-    <div class="modal-outer">
+    <div class="modal-outer modal-outer--correction">
       <div class="modal">
 
-        <div class="modal-header">
-          <span class="modal-title">suggest a correction</span>
-          <button class="modal-close" onclick="closeCorrection()">x</button>
+        <div class="modal-header modal-header--correction">
+          <div class="modal-header-inner">
+            <div class="modal-eyebrow">keep the map accurate</div>
+            <span class="modal-title">&#x270E; suggest a correction</span>
+          </div>
+          <button class="modal-close" onclick="closeCorrection()">&#x2715;</button>
         </div>
 
         <div class="modal-body">
 
-          <p style="font-size:0.75rem;line-height:1.7;margin-bottom:1rem;color:var(--stone)">
-            wrong location, closed permanently, changed hours, or something else? let us know.
-          </p>
+          <div class="correction-type-grid" id="c-type-grid">
+            <button type="button" class="corr-type-btn" data-value="wrong-location">
+              <span class="corr-type-icon">&#x25CE;</span>
+              wrong location
+            </button>
+            <button type="button" class="corr-type-btn" data-value="closed">
+              <span class="corr-type-icon">&#x2715;</span>
+              permanently closed
+            </button>
+            <button type="button" class="corr-type-btn" data-value="info">
+              <span class="corr-type-icon">&#x270F;</span>
+              wrong info / hours
+            </button>
+            <button type="button" class="corr-type-btn" data-value="duplicate">
+              <span class="corr-type-icon">&#x29C9;</span>
+              duplicate listing
+            </button>
+            <button type="button" class="corr-type-btn" data-value="other">
+              <span class="corr-type-icon">&#x22EF;</span>
+              other
+            </button>
+          </div>
+          <input type="hidden" id="c-type">
 
           <div class="form-group">
-            <label>place name</label>
+            <label>place name <span class="form-req">*</span></label>
             <input type="text" id="c-name" placeholder="which place is this about?">
           </div>
 
-          <div class="form-group">
-            <label>what needs correcting?</label>
-            <select id="c-type">
-              <option value="">choose one</option>
-              <option value="wrong-location">pin is in the wrong location</option>
-              <option value="closed">place has permanently closed</option>
-              <option value="info">hours, description, or other info is wrong</option>
-              <option value="duplicate">this is a duplicate listing</option>
-              <option value="other">other</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label>
-              corrected coordinates
-              <span style="font-weight:400;text-transform:none;letter-spacing:0;font-style:italic;color:var(--stone)">(if location is wrong)</span>
-            </label>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem">
-              <input type="text" id="c-lat" placeholder="lat">
-              <input type="text" id="c-lng" placeholder="lng">
+          <div class="form-row" id="c-coords-row">
+            <div class="form-group" style="flex:1">
+              <label>corrected lat <span class="form-hint-inline">if pin is wrong</span></label>
+              <input type="text" id="c-lat" placeholder="38.5449">
+            </div>
+            <div class="form-group" style="flex:1">
+              <label>corrected lng</label>
+              <input type="text" id="c-lng" placeholder="-121.7399">
             </div>
           </div>
 
           <div class="form-group">
             <label>details</label>
-            <textarea id="c-details" placeholder="anything else we should know"></textarea>
+            <textarea id="c-details" placeholder="what should it say instead? anything else we should know?"></textarea>
           </div>
 
-          <button class="btn btn-add" style="width:100%;margin-top:0.25rem" onclick="submitCorrection()">send correction</button>
-          <p class="submit-note">corrections go straight to the maintainer for review.</p>
+          <div class="form-group">
+            <label>your email <span class="form-hint-inline">optional — if you want a reply</span></label>
+            <input type="email" id="c-email" placeholder="you@example.com">
+          </div>
+
+          <button class="btn btn-correction btn-submit" onclick="submitCorrection()">send correction &#x2192;</button>
+          <p class="submit-note">corrections go straight to the maintainer. thanks for keeping the map accurate.</p>
 
         </div><!-- /modal-body -->
       </div><!-- /modal -->
@@ -320,15 +355,19 @@
        MODAL — ABOUT
        ============================================================ -->
   <div class="modal-backdrop" id="about-modal">
-    <div class="modal-outer">
+    <div class="modal-outer modal-outer--about">
       <div class="modal">
 
-        <div class="modal-header">
-          <span class="modal-title">open:grounds</span>
-          <button class="modal-close" onclick="closeAbout()">x</button>
+        <div class="modal-header modal-header--about">
+          <div class="about-hero">
+            <div class="about-hero-wordmark">open<span class="punct">:</span><span class="ital">grounds</span></div>
+            <div class="about-hero-sub">a citizen map of shared resources</div>
+            <div class="about-hero-loc">&#x25CE; davis, california</div>
+          </div>
+          <button class="modal-close modal-close--about" onclick="closeAbout()">&#x2715;</button>
         </div>
 
-        <div class="modal-body"> 
+        <div class="modal-body">
 
           <p class="about-text">
             open:grounds is a citizen-built map of common goods in davis, ca.
@@ -337,24 +376,27 @@
             tool libraries, thrift and reuse stores, bike repair, and more.
           </p>
 
-          <p class="about-text">
-            data is pulled from
-            <a href="https://freedge.org/" target="_blank">freedge</a>,
-            <a href="https://openstreetmap.org" target="_blank">openstreetmap</a>,
-            <a href="https://www.davisfarmersmarket.org/" target="_blank">davis farmers market</a>,
-            <a href="https://www.davisfoodcoop.com/" target="_blank">davis food co-op</a>,
-            <a href="https://ediblecampus.ucdavis.edu/" target="_blank">edible campus uc davis</a>,
-            <a href="https://littlefreelibrary.org/" target="_blank">little free library</a>,
-            and community submissions from people like you!!!
-          </p>
+          <div class="about-divider"><span>data sources</span></div>
 
-          <p style="font-size:0.72rem;color:var(--stone);line-height:1.6">
-            a project by
-            <a href="https://zahrabaxi.com" target="_blank" style="color:var(--flame);font-weight:700">zahra baxi</a>
-            · davis, ca
-          </p>
+          <div class="about-sources">
+            <a href="https://freedge.org/" target="_blank" class="about-source-pill">freedge</a>
+            <a href="https://openstreetmap.org" target="_blank" class="about-source-pill">openstreetmap</a>
+            <a href="https://www.davisfarmersmarket.org/" target="_blank" class="about-source-pill">davis farmers market</a>
+            <a href="https://www.davisfoodcoop.com/" target="_blank" class="about-source-pill">davis food co-op</a>
+            <a href="https://ediblecampus.ucdavis.edu/" target="_blank" class="about-source-pill">edible campus ucd</a>
+            <a href="https://littlefreelibrary.org/" target="_blank" class="about-source-pill">little free library</a>
+            <a href="https://fallingfruit.org" target="_blank" class="about-source-pill">falling fruit</a>
+            <span class="about-source-pill about-source-pill--you">+ you &#x2665;</span>
+          </div>
 
-          <button class="btn" style="margin-top:1rem" onclick="closeAbout()">close</button>
+          <div class="about-divider"><span>made by</span></div>
+
+          <div class="about-byline">
+            <a href="https://zahrabaxi.com" target="_blank" class="about-byline-name">zahra baxi</a>
+            <span class="about-byline-meta">davis, ca &middot; open source &middot; no ads &middot; no tracking</span>
+          </div>
+
+          <button class="btn btn-submit" style="margin-top:1.25rem" onclick="closeAbout()">close &#x2715;</button>
 
         </div><!-- /modal-body -->
       </div><!-- /modal -->
