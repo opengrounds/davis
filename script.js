@@ -939,54 +939,84 @@ async function loadAll() {
 
 /* ============================================================
    PANEL ROW RESIZE HANDLES
-   one horizontal drag handle sits between the index and commons panels.
-   the filters and index panels each get flex:1 (equal share) by default;
-   dragging the handle redistributes height between index and commons.
+   a horizontal drag handle sits between every pair of sidebar
+   panels (tags/filters, filters/index) so every section can be
+   resized, not just one fixed pair. dragging a handle redistributes
+   height between the panel directly above it and the panel directly
+   below it; other panels are unaffected.
    ============================================================ */
 
 (function() {
-  var filters  = document.querySelector('#panel-filters');
-  var index    = document.querySelector('#panel-index');
-  var commons  = document.querySelector('#panel-commons');
-  var handle2  = document.querySelector('#row-handle-2');
+  var MIN_H = 60;
 
-  var dragging   = false;
-  var dragStartY = 0;
-  var startIndex = 0;
-  var startCommons = 0;
+  // each handle's id maps to the panel above and below it
+  var pairs = [
+    { handle: '#row-handle-tags-filters', above: '#panel-tags',    below: '#panel-filters' },
+    { handle: '#row-handle-filters-index', above: '#panel-filters', below: '#panel-index'   }
+  ];
 
-  var MIN_H = 80;
+  pairs.forEach(function(pair) {
+    var handle = document.querySelector(pair.handle);
+    var above  = document.querySelector(pair.above);
+    var below  = document.querySelector(pair.below);
+    if (!handle || !above || !below) return;
 
-  if (!handle2 || !index || !commons) return;
+    var dragging   = false;
+    var dragStartY = 0;
+    var startAbove = 0;
+    var startBelow = 0;
 
-  handle2.addEventListener('mousedown', function(e) {
-    dragging   = true;
-    dragStartY = e.clientY;
-    startIndex   = index.getBoundingClientRect().height;
-    startCommons = commons.getBoundingClientRect().height;
-    handle2.classList.add('dragging');
-    document.body.style.cursor     = 'row-resize';
-    document.body.style.userSelect = 'none';
-    e.preventDefault();
-  });
+    handle.addEventListener('mousedown', function(e) {
+      dragging   = true;
+      dragStartY = e.clientY;
+      startAbove = above.getBoundingClientRect().height;
+      startBelow = below.getBoundingClientRect().height;
+      handle.classList.add('dragging');
+      document.body.style.cursor     = 'row-resize';
+      document.body.style.userSelect = 'none';
+      e.preventDefault();
+    });
 
-  document.addEventListener('mousemove', function(e) {
-    if (!dragging) return;
-    var delta    = e.clientY - dragStartY;
-    var newIndex   = Math.max(MIN_H, startIndex + delta);
-    var newCommons = Math.max(MIN_H, startCommons - delta);
-    index.style.height   = newIndex + 'px';
-    index.style.flex     = '0 0 ' + newIndex + 'px';
-    commons.style.height = newCommons + 'px';
-    commons.style.flex   = '0 0 ' + newCommons + 'px';
-  });
+    document.addEventListener('mousemove', function(e) {
+      if (!dragging) return;
+      var delta     = e.clientY - dragStartY;
+      var newAbove  = Math.max(MIN_H, startAbove + delta);
+      var newBelow  = Math.max(MIN_H, startBelow - delta);
+      above.style.flex = '0 0 ' + newAbove + 'px';
+      below.style.flex = '0 0 ' + newBelow + 'px';
+    });
 
-  document.addEventListener('mouseup', function() {
-    if (!dragging) return;
-    dragging = false;
-    handle2.classList.remove('dragging');
-    document.body.style.cursor     = '';
-    document.body.style.userSelect = '';
+    document.addEventListener('mouseup', function() {
+      if (!dragging) return;
+      dragging = false;
+      handle.classList.remove('dragging');
+      document.body.style.cursor     = '';
+      document.body.style.userSelect = '';
+    });
+
+    // touch support, so the same handles work on tablets/touch laptops
+    handle.addEventListener('touchstart', function(e) {
+      dragging   = true;
+      dragStartY = e.touches[0].clientY;
+      startAbove = above.getBoundingClientRect().height;
+      startBelow = below.getBoundingClientRect().height;
+      handle.classList.add('dragging');
+    }, { passive: true });
+
+    document.addEventListener('touchmove', function(e) {
+      if (!dragging) return;
+      var delta    = e.touches[0].clientY - dragStartY;
+      var newAbove = Math.max(MIN_H, startAbove + delta);
+      var newBelow = Math.max(MIN_H, startBelow - delta);
+      above.style.flex = '0 0 ' + newAbove + 'px';
+      below.style.flex = '0 0 ' + newBelow + 'px';
+    }, { passive: true });
+
+    document.addEventListener('touchend', function() {
+      if (!dragging) return;
+      dragging = false;
+      handle.classList.remove('dragging');
+    });
   });
 }());
 
@@ -999,6 +1029,8 @@ function openSubmit()    { document.querySelector('#submit-modal').classList.add
 function closeSubmit()   { document.querySelector('#submit-modal').classList.remove('open'); }
 function openAbout()     { document.querySelector('#about-modal').classList.add('open'); }
 function closeAbout()    { document.querySelector('#about-modal').classList.remove('open'); }
+function openCommons()   { document.querySelector('#commons-modal').classList.add('open'); }
+function closeCommons()  { document.querySelector('#commons-modal').classList.remove('open'); }
 function openCorrection()  { document.querySelector('#correction-modal').classList.add('open'); }
 function closeCorrection() { document.querySelector('#correction-modal').classList.remove('open'); }
 

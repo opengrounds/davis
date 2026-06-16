@@ -218,29 +218,42 @@ header {
 }
 
 .panel {
-  border-bottom: var(--border);
+  border-bottom: 1px solid rgba(21,19,15,0.12);
   padding: 1rem 1.15rem;
   overflow: hidden;
-  flex: 1;
-  min-height: 0;
+  min-height: 60px;
   display: flex;
   flex-direction: column;
 }
 
-/* each panel gets its own tinted background */
-.panel-filters { background: var(--pink-tint); }
-.panel-sources { background: var(--sky-tint); }
-.panel-index   { background: var(--flame-tint); }
-.panel-commons { background: var(--grass-tint); border-bottom: none; }
+/* one quiet background for the whole sidebar — color is reserved
+   for actual data (category swatches, listing numbers), not chrome */
+.panel-tags,
+.panel-filters,
+.panel-index { background: var(--paper); }
+
+/* sensible starting heights — all freely resizable via the drag
+   handles between panels, with a 60px floor so none can be crushed
+   away entirely. content scrolls inside a panel once it outgrows
+   the height the user has given it. */
+.panel-tags    { flex: 0 0 auto; }      /* sized to its own content */
+.panel-filters { flex: 0 0 220px; }
+.panel-index   { flex: 1 1 auto; }      /* takes remaining space */
 
 .panel-label {
   font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  font-size: 0.66rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--stone);
+  margin-bottom: 0.65rem;
+  flex-shrink: 0;
+}
+.panel-index .panel-label {
+  color: var(--ink);
   font-weight: 700;
   font-size: 0.72rem;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  margin-bottom: 0.75rem;
-  flex-shrink: 0;
 }
 .panel-label .muted {
   font-family: 'Space Mono', monospace;
@@ -253,7 +266,7 @@ header {
 /* horizontal drag handle between panels — mirrors the vertical one on the sidebar */
 .panel-resize-handle {
   height: 4px;
-  background: var(--ink);
+  background: rgba(21,19,15,0.15);
   cursor: row-resize;
   flex-shrink: 0;
   position: relative;
@@ -271,7 +284,7 @@ header {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  color: var(--paper);
+  color: var(--stone);
   font-size: 10px;
   letter-spacing: 2px;
   pointer-events: none;
@@ -298,12 +311,12 @@ header {
 .cat-btn {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
+  gap: 0.55rem;
   font-family: 'Space Grotesk', sans-serif;
   font-weight: 600;
-  font-size: 0.85rem;
-  padding: 0.5rem 0.55rem;
-  border: 2px solid transparent;
+  font-size: 0.8rem;
+  padding: 0.38rem 0.5rem;
+  border: 1.5px solid transparent;
   background: transparent;
   color: var(--ink);
   cursor: pointer;
@@ -312,7 +325,7 @@ header {
   transition: border-color 0.1s, background 0.1s, color 0.1s;
 }
 
-.cat-btn:hover:not(.active) { background: rgba(21,19,15,0.08); }
+.cat-btn:hover:not(.active) { background: rgba(21,19,15,0.06); }
 
 .cat-btn.active {
   border-color: var(--ink);
@@ -322,9 +335,9 @@ header {
 
 /* the little colored square next to each category label */
 .cat-swatch {
-  width: 14px;
-  height: 14px;
-  border: 2px solid var(--ink);
+  width: 11px;
+  height: 11px;
+  border: 1.5px solid rgba(21,19,15,0.4);
   background: var(--cat-color); /* set via inline CSS variable per button */
   flex-shrink: 0;
 }
@@ -334,8 +347,9 @@ header {
 .cat-count {
   margin-left: auto;
   font-family: 'Space Mono', monospace;
-  font-size: 0.72rem;
-  opacity: 0.6;
+  font-size: 0.7rem;
+  color: var(--stone);
+  opacity: 0.7;
 }
 
 
@@ -433,15 +447,22 @@ header {
 .listing-tag {
   display: inline-block;
   font-family: 'Space Grotesk', sans-serif;
-  font-size: 0.65rem;
+  font-size: 0.62rem;
   font-weight: 700;
-  letter-spacing: 0.07em;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
-  padding: 0.15rem 0.45rem;
-  border: 1.5px solid var(--ink);
-  color: var(--ink);
+  padding: 0.1rem 0.4rem;
+  border: 1px solid rgba(21,19,15,0.3);
+  color: var(--stone);
   transition: clip-path 0.18s ease, transform 0.18s ease, padding 0.18s ease, border-radius 0.18s ease;
   transform-origin: center;
+}
+
+/* category tag — the one piece of color allowed in the tag row,
+   echoing the listing-num circle so it doesn't add a new color */
+.listing-tag.cat-tag {
+  border-color: transparent;
+  font-weight: 700;
 }
 
 /* starburst burst state — 12-point star via clip-path, like image 1 */
@@ -471,16 +492,17 @@ header {
 .listing-tag.status {
   background: var(--flame);
   color: var(--paper);
-  border-color: var(--ink);
+  border-color: var(--flame);
 }
 
 .listing-link {
   background: transparent;
   color: var(--flame);
   text-decoration: none;
-  border-color: var(--flame);
+  border-color: transparent;
+  font-weight: 700;
 }
-.listing-link:hover { background: var(--flame); color: var(--paper); }
+.listing-link:hover { text-decoration: underline; }
 
 /* value tags (free, low-cost, indie, etc.) — muted outline style */
 .listing-tag.value-tag {
@@ -494,19 +516,15 @@ header {
 
 
 /* ============================================================
-   COMMONS LINKS PANEL
-   the "davis commons" section at the bottom of the sidebar
+   COMMONS LINKS
+   content shown inside the "davis commons" modal, opened from
+   the floating map button
    ============================================================ */
 
 .commons-links {
-  flex: 1;
-  min-height: 0;
-  overflow-y: auto;
   display: flex;
   flex-direction: column;
   gap: 0.15rem;
-  margin: 0 -1.15rem -1rem;
-  padding: 0 1.15rem 1rem;
 }
 
 .commons-section-label {
@@ -1023,9 +1041,49 @@ textarea { min-height: 72px; }
    small non-blocking banner on the map while addresses resolve
    ============================================================ */
 
-#geo-indicator {
+#commons-fab {
   position: absolute;
   bottom: 1.5rem;
+  right: 1rem;
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 116px;
+  height: 116px;
+  background: var(--grass);
+  color: var(--paper);
+  border: none;
+  padding: 0 26px;
+  box-sizing: border-box;
+  text-align: center;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1.25;
+  cursor: pointer;
+  clip-path: polygon(
+    50.0% 0.0%,  59.3% 15.2%, 75.0% 6.7%,  75.5% 24.5%,
+    93.3% 25.0%, 84.8% 40.7%, 100.0% 50.0%, 84.8% 59.3%,
+    93.3% 75.0%, 75.5% 75.5%, 75.0% 93.3%, 59.3% 84.8%,
+    50.0% 100.0%, 40.7% 84.8%, 25.0% 93.3%, 24.5% 75.5%,
+    6.7% 75.0%,  15.2% 59.3%, 0.0% 50.0%,  15.2% 40.7%,
+    6.7% 25.0%,  24.5% 24.5%, 25.0% 6.7%,  40.7% 15.2%
+  );
+  transition: transform 0.15s ease, background 0.1s;
+}
+#commons-fab:hover {
+  background: var(--ink);
+  transform: scale(1.06) rotate(-4deg);
+}
+#commons-fab:active {
+  transform: scale(0.97) rotate(-2deg);
+}
+
+#geo-indicator {
+  position: absolute;
+  bottom: 9.75rem;
   right: 1rem;
   z-index: 500;
   display: flex;
@@ -1091,31 +1149,33 @@ textarea { min-height: 72px; }
    TAG PILL FILTERS  (free / low-cost / etc.)
    ============================================================ */
 
-.panel-tags {
-  background: var(--grass-tint);
-  flex: 0 0 auto;       /* don't grow — fixed height */
-}
-
 .tag-pill-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.4rem;
+  gap: 0.3rem;
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+  /* pull it edge-to-edge so scrollbar sits flush, matches cat-list/listings */
+  margin: 0 -1.15rem -1rem;
+  padding: 0 1.15rem 1rem;
+  align-content: flex-start;
 }
 
 .tag-pill {
   font-family: 'Space Grotesk', sans-serif;
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  padding: 0.3rem 0.7rem;
-  border: 2px solid var(--ink);
-  background: var(--paper);
-  color: var(--ink);
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  padding: 0.22rem 0.55rem;
+  border: 1.5px solid rgba(21,19,15,0.25);
+  background: transparent;
+  color: var(--stone);
   cursor: pointer;
-  transition: background 0.1s, color 0.1s;
+  transition: background 0.1s, color 0.1s, border-color 0.1s;
   white-space: nowrap;
 }
-.tag-pill:hover:not(.active) { background: rgba(21,19,15,0.1); }
+.tag-pill:hover:not(.active) { background: rgba(21,19,15,0.07); border-color: rgba(21,19,15,0.4); color: var(--ink); }
 .tag-pill.active {
   background: var(--grass);
   color: var(--paper);
@@ -1171,6 +1231,17 @@ textarea { min-height: 72px; }
   .leaflet-control-zoom {
     margin-bottom: calc(var(--tab-h) + 12px) !important;
   }
+
+  /* push the commons fab and geo-indicator above the tab bar too —
+     shrink the starburst a touch to keep it from crowding the map */
+  #commons-fab {
+    bottom: calc(var(--tab-h) + 1rem);
+    width: 92px;
+    height: 92px;
+    padding: 0 20px;
+    font-size: 0.64rem;
+  }
+  #geo-indicator { bottom: calc(var(--tab-h) + 7.5rem); }
 
   /* ---- popups on mobile ---- */
   .leaflet-popup-content {
@@ -1686,6 +1757,37 @@ textarea { min-height: 72px; }
 }
 .btn-correction:hover  { background: var(--ink); }
 .btn-correction:active { box-shadow: 1px 1px 0 var(--ink); }
+
+/* --- COMMONS header --- */
+.modal-header--commons {
+  background: var(--grass);
+  color: var(--paper);
+  padding: 1.25rem 1.5rem;
+  border-bottom: var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-shrink: 0;
+}
+
+.modal-header--commons .modal-title {
+  color: var(--paper);
+  font-size: 1.35rem;
+  letter-spacing: -0.02em;
+}
+
+.modal-header--commons .modal-eyebrow {
+  color: var(--paper);
+}
+
+.modal-header--commons .modal-close {
+  color: var(--paper);
+  opacity: 0.7;
+  font-size: 1.1rem;
+}
+.modal-header--commons .modal-close:hover { opacity: 1; color: var(--paper); }
+
+.modal-outer--commons { max-width: 480px; }
 
 /* --- ABOUT header --- */
 .modal-header--about {
