@@ -2119,6 +2119,20 @@ textarea { min-height: 72px; }
   font-weight: 700;
 }
 
+/* byline meta links (open source, all projects) */
+.about-byline-meta a {
+  color: var(--ink);
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-color: var(--stone);
+  text-underline-offset: 2px;
+  transition: color 0.15s, text-decoration-color 0.15s;
+}
+.about-byline-meta a:hover {
+  color: var(--pink);
+  text-decoration-color: var(--pink);
+}
+
 /* byline name */
 .about-byline-name {
   display: inline-block;
