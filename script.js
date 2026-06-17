@@ -306,14 +306,8 @@ function makeIcon(cat, num) {
   var color = catColor(cat);
 
   // build the icon as an inline-styled div so it matches our design system
-  var html = '<div style="' +
-    'width:30px;height:30px;border-radius:50%;' +
+  var html = '<div class="place-marker-icon" style="' +
     'background:' + color + ';' +
-    'border:2px solid #15130F;' +
-    'display:flex;align-items:center;justify-content:center;' +
-    'font-family:\'Space Grotesk\',sans-serif;font-weight:400;' +
-    'font-size:15px;color:#F7F4EC;' +
-    'box-shadow:2px 2px 0 rgba(21,19,15,0.35);line-height:1' +
   '">' + num + '</div>';
 
   return L.divIcon({
