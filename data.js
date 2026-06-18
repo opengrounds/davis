@@ -7,6 +7,8 @@
     'public'    — publicly known places (co-ops, city gardens, thrift stores, etc.)
     'community' — community-submitted or crowd-sourced (little free libraries, freedges)
     'fallingfruit' — falling fruit foraging database (assigned by script.js at fetch time)
+
+  exported from the admin page on 6/18/2026, 8:35:05 AM
 */
 
 
@@ -17,23 +19,23 @@
    ============================================================ */
 
 var CATEGORIES = [
-  { id: 'all',      label: 'all',                 color: '#15130F' },
-  { id: 'fridge',   label: 'community fridge',    color: '#2F9BD6' },
-  { id: 'pantry',   label: 'free pantry',         color: '#ff9d00' },
-  { id: 'coop',     label: 'food co-op',          color: '#e2c221' },
-  { id: 'commun',    label: 'community meals',    color: '#E53E3E' },
-  { id: 'garden',   label: 'community garden',    color: '#38A169' },
-  { id: 'market',   label: 'farmers market',      color: '#c22fb8' },
-  { id: 'foraging', label: 'foraging',            color: '#A855F7' },
-  { id: 'lolib',    label: 'local library',       color: '#beb129' },
-  { id: 'library',  label: 'little free library', color: '#FF3E86' },
-  { id: 'bikes',    label: 'bike repair',         color: '#4F6BFF' },
-  { id: 'tools',    label: 'tool / repair',       color: '#00A3C4' },
-  { id: 'thrift',   label: 'thrift & reuse',      color: '#805AD5' },
-  { id: 'parks',    label: 'community parks',     color: '#154736' },
-  { id: 'entertain', label: 'arts & media',       color: '#FF5722' },
-  { id: 'mutual',   label: 'mutual aid',          color: '#84CC16' },
-  { id: 'other',    label: 'other commons',       color: '#718096' }
+  { id: 'all', label: 'all', color: '#15130F' },
+  { id: 'fridge', label: 'community fridge', color: '#2F9BD6' },
+  { id: 'pantry', label: 'free pantry', color: '#ff9d00' },
+  { id: 'coop', label: 'food co-op', color: '#e2c221' },
+  { id: 'commun', label: 'community meals', color: '#E53E3E' },
+  { id: 'garden', label: 'community garden', color: '#38A169' },
+  { id: 'market', label: 'farmers market', color: '#c22fb8' },
+  { id: 'foraging', label: 'foraging', color: '#A855F7' },
+  { id: 'lolib', label: 'local library', color: '#beb129' },
+  { id: 'library', label: 'little free library', color: '#FF3E86' },
+  { id: 'bikes', label: 'bike repair', color: '#4F6BFF' },
+  { id: 'tools', label: 'tool / repair', color: '#00A3C4' },
+  { id: 'thrift', label: 'thrift & reuse', color: '#805AD5' },
+  { id: 'parks', label: 'community parks', color: '#154736' },
+  { id: 'entertain', label: 'arts & media', color: '#FF5722' },
+  { id: 'mutual', label: 'mutual aid', color: '#84CC16' },
+  { id: 'other', label: 'other commons', color: '#718096' }
 ];
 
 
@@ -63,8 +65,8 @@ var SEED_DATA = [
     name: 'Cannery Community Garden',
     category: 'garden',
     lat: 38.566203, lng: -121.741893,
-    address: '1701 Harvest St, Davis CA 95616',
     geocodeAddress: '1701 Harvest St, Davis, CA',
+    address: '1701 Harvest St, Davis CA 95616',
     link: 'https://cityofdavis.org/city-hall/parks-community-services/parks-open-space/community-gardens',
     description: 'raised-bed plots in the Cannery neighborhood, open to residents and the public via the city garden program.',
     source: 'public',
@@ -74,7 +76,7 @@ var SEED_DATA = [
     id: 's3',
     name: 'ASUCD Experimental College Garden',
     category: 'garden',
-    lat: 38.5346, lng: -121.7620,
+    lat: 38.5346, lng: -121.762,
     geocodeAddress: 'UC Davis Student Farm Domes, Davis, CA',
     address: 'UC Davis campus, near the Domes',
     link: 'https://asucd.ucdavis.edu',
@@ -82,8 +84,6 @@ var SEED_DATA = [
     source: 'public',
     tags: ['free', 'volunteer', 'community']
   },
-
-
   {
     id: 's4',
     name: 'Mary L. Stephens Davis Branch Library',
@@ -108,12 +108,12 @@ var SEED_DATA = [
     source: 'public',
     tags: ['free', 'volunteer', 'community']
   },
-
   {
     id: 's5',
     name: 'Davis Food Co-op Freedge',
     category: 'fridge',
-    lat: 38.549561, lng: -121.740080,
+    lat: 38.549561, lng: -121.74008,
+    geocodeAddress: null,
     address: '620 G St, Davis CA 95616',
     link: 'https://davisfood.coop',
     description: 'community fridge on the west side of the co-op building. staff restock it daily with surplus produce, dairy, and bakery. take what you need, leave what you can.',
@@ -173,8 +173,8 @@ var SEED_DATA = [
     name: 'Easy Wind Gear',
     category: 'thrift',
     lat: 38.549301, lng: -121.740791,
-    address: '617 G St, Davis, CA 95616',
     geocodeAddress: '617 G St, Davis, CA',
+    address: '617 G St, Davis, CA 95616',
     link: 'https://easywindgear.com/',
     description: 'outdoor gear reuse store. affordable used camping, hiking, and climbing gear.',
     source: 'public',
@@ -240,8 +240,7 @@ var SEED_DATA = [
     source: 'public',
     tags: ['low-cost', 'community']
   },
-
-{
+  {
     id: 's15',
     name: 'Dero FixIt - Hawthorn Hall',
     category: 'bikes',
@@ -253,7 +252,6 @@ var SEED_DATA = [
     source: 'dero',
     tags: ['free', 'sharing']
   },
-
   {
     id: 's16',
     name: 'Dero FixIt - Scrub Oak Hall',
@@ -302,7 +300,7 @@ var SEED_DATA = [
     source: 'dero',
     tags: ['free', 'sharing']
   },
-    {
+  {
     id: 's20',
     name: 'Dero FixIt - UC Davis',
     category: 'bikes',
@@ -314,8 +312,7 @@ var SEED_DATA = [
     source: 'dero',
     tags: ['free', 'sharing']
   },
-
-    {
+  {
     id: 's21',
     name: 'Dero FixIt - Sunrise Park',
     category: 'bikes',
@@ -327,7 +324,7 @@ var SEED_DATA = [
     source: 'dero',
     tags: ['free', 'sharing']
   },
-   {
+  {
     id: 's22',
     name: 'Dero FixIt - UC Davis Activities and Recreation Center',
     category: 'bikes',
@@ -375,8 +372,6 @@ var SEED_DATA = [
     source: 'dero',
     tags: ['free', 'sharing']
   },
-
-
   {
     id: 's26',
     name: 'Free Supply Closet @ J Street Co-op',
@@ -389,7 +384,6 @@ var SEED_DATA = [
     source: 'public',
     tags: ['free', 'community']
   },
-
   {
     id: 's27',
     name: 'Mutual Aid in Davis (MAD)',
@@ -407,27 +401,18 @@ var SEED_DATA = [
 
 /* ============================================================
    ADDRESS-ONLY ENTRIES
-   places that come in as an address only — no coordinates.
-   lat/lng are left as null here; geocodeSeedData() resolves
-   them via nominatim on load, caching results in localStorage.
-   entries stay hidden on the map until geocoding resolves them.
-
-   to add more places, copy the shape below: id, name, category,
-   lat: null, lng: null, address (shown to users), geocodeAddress
-   (the query sent to nominatim — keep it simple), description,
-   link, source.
+   community-sourced or address-only places, geocoded the
+   same way as SEED_DATA.
    ============================================================ */
 
 var ADDRESS_DATA = [
-
-  // -------- freedges --------
   {
     id: 's28',
     name: 'East Davis Freedge',
     category: 'fridge',
     lat: 38.55979, lng: -121.7259293,
-    address: '2013 Whittier Dr, Davis CA 95618',
     geocodeAddress: '2013 Whittier Dr, Davis, CA',
+    address: '2013 Whittier Dr, Davis CA 95618',
     link: null,
     description: 'neighborhood freedge in East Davis. take what you need, leave what you can.',
     source: 'community',
@@ -438,8 +423,8 @@ var ADDRESS_DATA = [
     name: 'Neighborhood Kitchen Freedge',
     category: 'fridge',
     lat: 38.568911, lng: -121.7498,
-    address: '257 Grande Ave, Davis, CA 95616',
     geocodeAddress: '275 Grande Ave, Davis, CA',
+    address: '257 Grande Ave, Davis, CA 95616',
     link: null,
     description: 'community freedge along Grande Ave. take what you need, leave what you can.',
     source: 'community',
@@ -450,8 +435,8 @@ var ADDRESS_DATA = [
     name: 'Eureka Freedge',
     category: 'fridge',
     lat: 38.554131, lng: -121.750091,
-    address: '1221 Eureka Ave, Davis CA 95616',
     geocodeAddress: '1221 Eureka Ave, Davis, CA',
+    address: '1221 Eureka Ave, Davis CA 95616',
     link: null,
     description: 'neighborhood freedge on Eureka Ave. take what you need, leave what you can.',
     source: 'community',
@@ -462,8 +447,8 @@ var ADDRESS_DATA = [
     name: 'Turtlehouse Freedge',
     category: 'fridge',
     lat: 38.542451, lng: -121.746072,
-    address: '217 2nd St, Davis CA 95616',
     geocodeAddress: '217 2nd St, Davis, CA',
+    address: '217 2nd St, Davis CA 95616',
     link: null,
     description: 'community freedge in downtown Davis. take what you need, leave what you can.',
     source: 'community',
@@ -474,8 +459,8 @@ var ADDRESS_DATA = [
     name: 'UC Davis Silo Freedge',
     category: 'fridge',
     lat: 38.538756, lng: -121.753033,
-    address: '420 Hutchison Dr, Davis CA 95616',
     geocodeAddress: '420 Hutchison Dr, Davis, CA',
+    address: '420 Hutchison Dr, Davis CA 95616',
     link: null,
     description: 'campus freedge near the Silo. take what you need, leave what you can.',
     source: 'community',
@@ -486,23 +471,20 @@ var ADDRESS_DATA = [
     name: 'Bowley Plant Science Teaching Center Freedge',
     category: 'fridge',
     lat: 38.539142, lng: -121.763935,
-    address: '1200 Extension Center Cir, Davis CA 95616',
     geocodeAddress: '1200 Extension Center Cir, Davis, CA',
+    address: '1200 Extension Center Cir, Davis CA 95616',
     link: null,
     description: 'only the Student Farm stocks this freedge, but anyone can take food from it. usually well stocked with produce through the week.',
     source: 'community',
-    status: 'open weekdays 8am-5pm',
     tags: ['free', 'community']
   },
-
-  // -------- thrift & reuse --------
   {
     id: 's34',
     name: 'Bohème',
     category: 'thrift',
     lat: 38.544472, lng: -121.743234,
-    address: '409 3rd St, Davis CA 95616',
     geocodeAddress: '409 3rd St, Davis, CA',
+    address: '409 3rd St, Davis CA 95616',
     link: 'https://www.bohemethreads.com/',
     description: 'vintage and secondhand clothing boutique in downtown Davis.',
     source: 'public',
@@ -513,22 +495,20 @@ var ADDRESS_DATA = [
     name: 'Goodwill',
     category: 'thrift',
     lat: 38.553322, lng: -121.730549,
-    address: '1640 E 8th St, Davis CA 95616',
     geocodeAddress: '1640 E 8th St, Davis, CA',
+    address: '1640 E 8th St, Davis CA 95616',
     link: null,
     description: 'donation-based thrift store with clothing, housewares, books, and more.',
     source: 'public',
     tags: ['low-cost', 'secondhand']
   },
-
-  // -------- edible campus harvest sites --------
   {
     id: 's36',
     name: 'Salad Bowl Garden (Edible Campus)',
     category: 'foraging',
     lat: 38.54298, lng: -121.751483,
-    address: 'Plant and Environmental Sciences Building, UC Davis',
     geocodeAddress: '387 N Quad, Davis, CA',
+    address: 'Plant and Environmental Sciences Building, UC Davis',
     link: 'https://ediblecampus.ucdavis.edu/gardens/sbg',
     description: 'student-run edible landscape outside the Plant and Environmental Sciences building, growing since 2008. pick your own salad greens and veggies. open to anyone on campus.',
     source: 'public',
@@ -539,22 +519,20 @@ var ADDRESS_DATA = [
     name: 'Biological Orchard and Gardens (BOG), Mann Laboratory',
     category: 'foraging',
     lat: 38.541491, lng: -121.75564,
-    address: 'Mann Laboratory, UC Davis',
     geocodeAddress: '549 Kleiber Hall Dr, Davis, CA',
+    address: 'Mann Laboratory, UC Davis',
     link: 'https://ediblecampus.ucdavis.edu/gardens/bog',
     description: 'permaculture demonstration garden in the heart of campus, including an orchard of heirloom California fruit trees. visitors are free to sample the harvest once established.',
     source: 'public',
     tags: ['free', 'community']
   },
-
-  // -------- little free libraries --------
   {
     id: 's38',
     name: 'Little Free Library + Board Games',
     category: 'library',
     lat: null, lng: null,
-    address: '2816 Loyola Dr, Davis CA 95618',
     geocodeAddress: '2816 Loyola Dr, Davis, CA',
+    address: '2816 Loyola Dr, Davis CA 95618',
     link: null,
     description: 'little free library that also has a board game lending shelf.',
     source: 'community',
@@ -565,8 +543,8 @@ var ADDRESS_DATA = [
     name: 'Little Free Library + Produce Basket',
     category: 'library',
     lat: null, lng: null,
-    address: '1102 Petra Ct, Davis CA 95618',
     geocodeAddress: '1102 Petra Ct, Davis, CA',
+    address: '1102 Petra Ct, Davis CA 95618',
     link: null,
     description: 'little free library paired with a produce-sharing basket. take a book, take some extra produce.',
     source: 'community',
@@ -577,8 +555,8 @@ var ADDRESS_DATA = [
     name: 'Little Free Library – Prado Ln',
     category: 'library',
     lat: null, lng: null,
-    address: '2951 Prado Ln, Davis CA 95618',
     geocodeAddress: '2951 Prado Ln, Davis, CA',
+    address: '2951 Prado Ln, Davis CA 95618',
     link: null,
     description: 'a little free library on Prado Ln. swap a book, take a book.',
     source: 'community',
@@ -589,8 +567,8 @@ var ADDRESS_DATA = [
     name: 'Little Free Library – Camphor Ln',
     category: 'library',
     lat: null, lng: null,
-    address: '1367 Camphor Ln, Davis CA 95618',
     geocodeAddress: '1367 Camphor Ln, Davis, CA',
+    address: '1367 Camphor Ln, Davis CA 95618',
     link: null,
     description: 'a little free library on Camphor Ln. swap a book, take a book.',
     source: 'community',
@@ -601,8 +579,8 @@ var ADDRESS_DATA = [
     name: 'Little Free Library – Layton Dr',
     category: 'library',
     lat: null, lng: null,
-    address: '2826 Layton Dr, Davis CA 95618',
     geocodeAddress: '2826 Layton Dr, Davis, CA',
+    address: '2826 Layton Dr, Davis CA 95618',
     link: null,
     description: 'a little free library on Layton Dr. swap a book, take a book.',
     source: 'community',
@@ -613,8 +591,8 @@ var ADDRESS_DATA = [
     name: 'Little Free Library – Blackburn Dr',
     category: 'library',
     lat: null, lng: null,
-    address: '2613 Blackburn Dr, Davis CA 95618',
     geocodeAddress: '2613 Blackburn Dr, Davis, CA',
+    address: '2613 Blackburn Dr, Davis CA 95618',
     link: null,
     description: 'a little free library on Blackburn Dr. swap a book, take a book.',
     source: 'community',
@@ -625,8 +603,8 @@ var ADDRESS_DATA = [
     name: 'Little Free Library – Monarch Ln',
     category: 'library',
     lat: null, lng: null,
-    address: '1803 Monarch Ln, Davis CA 95618',
     geocodeAddress: '1803 Monarch Ln, Davis, CA',
+    address: '1803 Monarch Ln, Davis CA 95618',
     link: null,
     description: 'a little free library on Monarch Ln. swap a book, take a book.',
     source: 'community',
@@ -637,8 +615,8 @@ var ADDRESS_DATA = [
     name: 'Little Free Library – Eligio Ln',
     category: 'library',
     lat: null, lng: null,
-    address: '1430 Eligio Ln, Davis CA 95618',
     geocodeAddress: '1430 Eligio Ln, Davis, CA',
+    address: '1430 Eligio Ln, Davis CA 95618',
     link: null,
     description: 'a little free library on Eligio Ln. swap a book, take a book.',
     source: 'community',
@@ -649,8 +627,8 @@ var ADDRESS_DATA = [
     name: 'Little Free Library – Alegre Way',
     category: 'library',
     lat: null, lng: null,
-    address: '3848 Alegre Way, Davis CA 95618',
     geocodeAddress: '3848 Alegre Way, Davis, CA',
+    address: '3848 Alegre Way, Davis CA 95618',
     link: null,
     description: 'a little free library on Alegre Way. swap a book, take a book.',
     source: 'community',
@@ -661,8 +639,8 @@ var ADDRESS_DATA = [
     name: 'Little Free Library – Arroyo Ave',
     category: 'library',
     lat: null, lng: null,
-    address: '4114 Arroyo Ave, Davis CA 95618',
     geocodeAddress: '4114 Arroyo Ave, Davis, CA',
+    address: '4114 Arroyo Ave, Davis CA 95618',
     link: null,
     description: 'a little free library on Arroyo Ave. swap a book, take a book.',
     source: 'community',
@@ -673,8 +651,8 @@ var ADDRESS_DATA = [
     name: 'Little Free Library – Atlantis Park',
     category: 'library',
     lat: null, lng: null,
-    address: '1406 Pastal Way, Davis CA 95618',
     geocodeAddress: '1406 Pastal Way, Davis, CA',
+    address: '1406 Pastal Way, Davis CA 95618',
     link: null,
     description: 'a little free library on Pastal Way. swap a book, take a book.',
     source: 'community',
@@ -685,8 +663,8 @@ var ADDRESS_DATA = [
     name: 'Little Free Library – La Paz Dr',
     category: 'library',
     lat: null, lng: null,
-    address: '815 La Paz Dr, Davis CA 95618',
     geocodeAddress: '815 La Paz Dr, Davis, CA',
+    address: '815 La Paz Dr, Davis CA 95618',
     link: null,
     description: 'a little free library on La Paz Dr. swap a book, take a book.',
     source: 'community',
@@ -697,8 +675,8 @@ var ADDRESS_DATA = [
     name: 'Little Free Library – East Davis',
     category: 'library',
     lat: null, lng: null,
-    address: '2222 E 8th St, Davis CA 95618',
     geocodeAddress: '2222 E 8th St, Davis, CA',
+    address: '2222 E 8th St, Davis CA 95618',
     link: null,
     description: 'a little free library on E 8th St. swap a book, take a book.',
     source: 'community',
@@ -709,359 +687,356 @@ var ADDRESS_DATA = [
     name: 'Little Free Library – Renoir Ave',
     category: 'library',
     lat: null, lng: null,
-    address: '2005 Renoir Ave, Davis CA 95618',
     geocodeAddress: '2005 Renoir Ave, Davis, CA',
+    address: '2005 Renoir Ave, Davis CA 95618',
     link: null,
     description: 'a little free library on Renoir Ave. swap a book, take a book.',
     source: 'community',
     tags: ['free', 'community', 'sharing']
   },
-
-
-
-   {
+  {
     id: 's52',
     name: 'Little Free Library – Coolidge Court',
     category: 'library',
     lat: null, lng: null,
-    address: '517 Coolidge Ct, Davis, CA',
     geocodeAddress: '517 Coolidge Ct, Davis, CA',
+    address: '517 Coolidge Ct, Davis, CA',
     link: null,
     description: 'a little free library on Coolidge Court. swap a book, take a book.',
     source: 'community',
     tags: ['free', 'community', 'sharing']
   },
-   {
+  {
     id: 's53',
     name: 'Little Free Library – McNelson\'s Library',
     category: 'library',
     lat: null, lng: null,
+    geocodeAddress: '3203 Chesapeake Bay St, Davis, CA',
     address: 'Chesapeake Bay and Secret Bay streets, Davis, CA',
-    geocodeAddress: '3203 Chesapeake Bay Ave, Davis, CA',
     link: null,
     description: 'a little free library on Chesapeake Bay and Secret Bay streets. swap a book, take a book.',
     source: 'community',
     tags: ['free', 'community', 'sharing']
   },
-   {
+  {
     id: 's54',
     name: 'Little Free Library – Morro Bay',
     category: 'library',
     lat: null, lng: null,
-    address: '3325 Morro Bay Ave, Davis, CA',
     geocodeAddress: '3325 Morro Bay Ave, Davis, CA',
+    address: '3325 Morro Bay Ave, Davis, CA',
     link: null,
     description: 'a little free library on Morro Bay Ave. swap a book, take a book.',
     source: 'community',
     tags: ['free', 'community', 'sharing']
   },
-   {
+  {
     id: 's55',
     name: 'Little Free Library – Popo And Lǎoye Library',
     category: 'library',
     lat: null, lng: null,
-    address: '2334 Glacier Place, Davis, CA',
     geocodeAddress: '2334 Glacier Place, Davis, CA',
+    address: '2334 Glacier Place, Davis, CA',
     link: null,
     description: 'a little free library on Glacier Place. swap a book, take a book.',
     source: 'community',
     tags: ['free', 'community', 'sharing']
   },
-   {
+  {
     id: 's56',
     name: 'Little Free Library – Purdue Dr',
     category: 'library',
     lat: null, lng: null,
-    address: '1219 Purdue Dr, Davis, CA',
     geocodeAddress: '1219 Purdue Dr, Davis, CA',
+    address: '1219 Purdue Dr, Davis, CA',
     link: null,
     description: 'a little free library on Purdue Dr. swap a book, take a book.',
     source: 'community',
     tags: ['free', 'community', 'sharing']
   },
-   {
+  {
     id: 's57',
     name: 'Little Free Library – Charlotte\'s Mystery Library',
     category: 'library',
     lat: null, lng: null,
-    address: '1251 Fordham Dr, Davis, CA',
     geocodeAddress: '1251 Fordham Dr, Davis, CA',
+    address: '1251 Fordham Dr, Davis, CA',
     link: null,
     description: 'a little free library on Fordham Dr. swap a book, take a book.',
     source: 'community',
     tags: ['free', 'community', 'sharing']
   },
-   {
+  {
     id: 's58',
     name: 'Little Free Library – Lemon Ln',
     category: 'library',
     lat: null, lng: null,
-    address: '1520 Lemon Ln, Davis, CA',
     geocodeAddress: '1520 Lemon Ln, Davis, CA',
+    address: '1520 Lemon Ln, Davis, CA',
     link: null,
     description: 'a little free library on Lemon Ln. swap a book, take a book.',
     source: 'community',
     tags: ['free', 'community', 'sharing']
   },
-   {
+  {
     id: 's59',
     name: 'Little Free Library – Ben\'s Little Library',
     category: 'library',
     lat: null, lng: null,
-    address: '2608 Quail St., Davis, CA',
     geocodeAddress: '2608 Quail St., Davis, CA',
+    address: '2608 Quail St., Davis, CA',
     link: null,
     description: 'a little free library on Quail St at the crosswalk to the Greenbelt, near the Dominoes statue. swap a book, take a book.',
     source: 'community',
     tags: ['free', 'community', 'sharing']
   },
-   {
+  {
     id: 's60',
     name: 'Little Free Library – The Little Bluebird Library',
     category: 'library',
     lat: null, lng: null,
-    address: '616 Bluebird Place, Davis, CA',
     geocodeAddress: '616 Bluebird Place, Davis, CA',
+    address: '616 Bluebird Place, Davis, CA',
     link: null,
     description: 'a little free library on Bluebird Place. swap a book, take a book.',
     source: 'community',
     tags: ['free', 'community', 'sharing']
   },
-   {
+  {
     id: 's61',
     name: 'Little Free Kids Library',
     category: 'library',
     lat: null, lng: null,
-    address: '240 Pintail Place, Davis, CA',
     geocodeAddress: '240 Pintail Place, Davis, CA',
+    address: '240 Pintail Place, Davis, CA',
     link: null,
     description: 'a little free kids library on Pintail Place. swap a book, take a book.',
     source: 'community',
     tags: ['free', 'community', 'sharing']
   },
-   {
+  {
     id: 's62',
     name: 'Little Free Library – Sandpiper Drive',
     category: 'library',
     lat: null, lng: null,
-    address: '218 Sandpiper Drive, Davis, CA',
     geocodeAddress: '218 Sandpiper Drive, Davis, CA',
+    address: '218 Sandpiper Drive, Davis, CA',
     link: null,
     description: 'a little free library on Sandpiper Drive. swap a book, take a book.',
     source: 'community',
     tags: ['free', 'community', 'sharing']
   },
-   {
+  {
     id: 's63',
     name: 'Little Free Library – Fiesta Ave',
     category: 'library',
     lat: null, lng: null,
-    address: '404 Fiesta Ave, Davis, CA',
     geocodeAddress: '404 Fiesta Ave, Davis, CA',
+    address: '404 Fiesta Ave, Davis, CA',
     link: null,
     description: 'a little free library on Fiesta Ave. swap a book, take a book.',
     source: 'community',
     tags: ['free', 'community', 'sharing']
   },
-   {
+  {
     id: 's64',
     name: 'Little Free Library – Bueno Drive',
     category: 'library',
     lat: null, lng: null,
-    address: '2504 Bueno Dr., Davis, CA',
     geocodeAddress: '2504 Bueno Dr., Davis, CA',
+    address: '2504 Bueno Dr., Davis, CA',
     link: null,
     description: 'a little free library on Bueno Drive. swap a book, take a book.',
     source: 'community',
     tags: ['free', 'community', 'sharing']
   },
-   {
+  {
     id: 's65',
     name: 'Little Free Library – Hawthorne Ln',
     category: 'library',
     lat: null, lng: null,
-    address: '768 Hawthorne Ln, Davis, CA',
     geocodeAddress: '768 Hawthorne Ln, Davis, CA',
+    address: '768 Hawthorne Ln, Davis, CA',
     link: null,
     description: 'a little free library on Hawthorne Ln. swap a book, take a book.',
     source: 'community',
     tags: ['free', 'community', 'sharing']
   },
-   {
+  {
     id: 's66',
     name: 'Little Free Library – Linden Ln',
     category: 'library',
     lat: null, lng: null,
-    address: '830 Linden Ln, Davis, CA',
     geocodeAddress: '830 Linden Ln, Davis, CA',
+    address: '830 Linden Ln, Davis, CA',
     link: null,
     description: 'a little free library on Linden Ln. swap a book, take a book.',
     source: 'community',
     tags: ['free', 'community', 'sharing']
   },
-   {
+  {
     id: 's67',
     name: 'Little Free Library – Georgetown Place',
     category: 'library',
     lat: null, lng: null,
-    address: '632 Georgetown Place, Davis, CA',
     geocodeAddress: '632 Georgetown Place, Davis, CA',
+    address: '632 Georgetown Place, Davis, CA',
     link: null,
     description: 'a little free library on Georgetown Place. swap a book, take a book.',
     source: 'community',
     tags: ['free', 'community', 'sharing']
   },
-   {
+  {
     id: 's68',
     name: 'Little Free Library – Oeste Drive',
     category: 'library',
     lat: null, lng: null,
-    address: '1000 Oeste Drive, Davis, CA',
     geocodeAddress: '1000 Oeste Drive, Davis, CA',
+    address: '1000 Oeste Drive, Davis, CA',
     link: null,
     description: 'a little free library on Oeste Drive. swap a book, take a book.',
     source: 'community',
     tags: ['free', 'community', 'sharing']
   },
-   {
+  {
     id: 's69',
     name: 'Little Free Library – Little Moon',
     category: 'library',
     lat: null, lng: null,
-    address: '554 Rutgers Dr, Davis, CA',
     geocodeAddress: '554 Rutgers Dr, Davis, CA',
+    address: '554 Rutgers Dr, Davis, CA',
     link: null,
     description: 'a little free library on Rutgers Dr. swap a book, take a book.',
     source: 'community',
     tags: ['free', 'community', 'sharing']
   },
-   {
+  {
     id: 's70',
     name: 'Little Free Library – The Brazil Family',
     category: 'library',
     lat: null, lng: null,
-    address: '1418 Redwood Lane, Davis, CA',
     geocodeAddress: '1418 Redwood Lane, Davis, CA',
+    address: '1418 Redwood Lane, Davis, CA',
     link: null,
     description: 'a little free library on Redwood Lane. swap a book, take a book.',
     source: 'community',
     tags: ['free', 'community', 'sharing']
   },
-   {
+  {
     id: 's71',
     name: 'Little Free Library – Elmwood Drive',
     category: 'library',
     lat: null, lng: null,
-    address: '760 Elmwood Drive, Davis, CA',
     geocodeAddress: '760 Elmwood Drive, Davis, CA',
+    address: '760 Elmwood Drive, Davis, CA',
     link: null,
     description: 'a little free library on Elmwood Drive. swap a book, take a book.',
     source: 'community',
     tags: ['free', 'community', 'sharing']
   },
-   {
+  {
     id: 's72',
     name: 'Little Free Library – College Park',
     category: 'library',
     lat: null, lng: null,
-    address: '28 College Park, Davis, CA',
     geocodeAddress: '28 College Park, Davis, CA',
+    address: '28 College Park, Davis, CA',
     link: null,
     description: 'a little free library on College Park. swap a book, take a book.',
     source: 'community',
     tags: ['free', 'community', 'sharing']
   },
-   {
+  {
     id: 's73',
     name: 'Little Free Library – Chloe\'s Yolo District Office',
     category: 'library',
     lat: null, lng: null,
-    address: '600 A Street, Davis, CA',
     geocodeAddress: '600 A Street, Davis, CA',
+    address: '600 A Street, Davis, CA',
     link: null,
     description: 'a little free library on A Street. swap a book, take a book.',
     source: 'community',
     tags: ['free', 'community', 'sharing']
   },
-   {
+  {
     id: 's74',
     name: 'Little Free Library – A Street',
     category: 'library',
     lat: null, lng: null,
-    address: '854 A Street, Davis, CA',
     geocodeAddress: '854 A Street, Davis, CA',
+    address: '854 A Street, Davis, CA',
     link: null,
     description: 'a little free library on A Street. swap a book, take a book.',
     source: 'community',
     tags: ['free', 'community', 'sharing']
   },
-    {
+  {
     id: 's75',
     name: 'Little Free Library – Cedar Place Children\'s Library',
     category: 'library',
     lat: null, lng: null,
-    address: '1301 Cedar Place, Davis, CA',
     geocodeAddress: '1301 Cedar Place, Davis, CA',
+    address: '1301 Cedar Place, Davis, CA',
     link: null,
     description: 'a little free library on Cedar Place. swap a book, take a book.',
     source: 'community',
     tags: ['free', 'community', 'sharing']
   },
-    {
+  {
     id: 's76',
     name: 'Little Free Library – Andyhaus',
     category: 'library',
     lat: null, lng: null,
-    address: '1501 L Street, Davis, CA',
     geocodeAddress: '1501 L Street, Davis, CA',
+    address: '1501 L Street, Davis, CA',
     link: null,
     description: 'a little free library on L Street. swap a book, take a book.',
     source: 'community',
     tags: ['free', 'community', 'sharing']
   },
-     {
+  {
     id: 's77',
     name: 'Little Free Library – University Ave',
     category: 'library',
     lat: null, lng: null,
-    address: '330 University Ave, Davis, CA',
     geocodeAddress: '330 University Ave, Davis, CA',
+    address: '330 University Ave, Davis, CA',
     link: null,
     description: 'a little free library on University Ave. swap a book, take a book.',
     source: 'community',
     tags: ['free', 'community', 'sharing']
   },
-     {
+  {
     id: 's78',
     name: 'Little Free Library – E Street',
     category: 'library',
     lat: null, lng: null,
-    address: '522 E Street, Davis, CA',
     geocodeAddress: '522 E Street, Davis, CA',
+    address: '522 E Street, Davis, CA',
     link: null,
     description: 'a little free library on E Street. swap a book, take a book.',
     source: 'community',
     tags: ['free', 'community', 'sharing']
   },
-     {
+  {
     id: 's79',
     name: 'Little Free Library – Little Lo',
     category: 'library',
     lat: null, lng: null,
-    address: '721 K St, Davis, CA',
     geocodeAddress: '721 K St, Davis, CA',
+    address: '721 K St, Davis, CA',
     link: null,
     description: 'a little free library on K St. swap a book, take a book.',
     source: 'community',
     tags: ['free', 'community', 'sharing']
   },
-     {
+  {
     id: 's80',
     name: 'Little Free Library – True Connections',
     category: 'library',
     lat: null, lng: null,
-    address: '405 L Street, Davis, CA',
     geocodeAddress: '405 L Street, Davis, CA',
+    address: '405 L Street, Davis, CA',
     link: null,
     description: 'a little free library on L Street. swap a book, take a book.',
     source: 'community',
@@ -1072,8 +1047,8 @@ var ADDRESS_DATA = [
     name: 'Little Free Library – Davis Manor Neighborhood Free Library',
     category: 'library',
     lat: null, lng: null,
-    address: '1418 Colgate Dr, Davis, CA',
     geocodeAddress: '1418 Colgate Dr, Davis, CA',
+    address: '1418 Colgate Dr, Davis, CA',
     link: null,
     description: 'a little free library on Colgate Dr. swap a book, take a book.',
     source: 'community',
@@ -1084,8 +1059,8 @@ var ADDRESS_DATA = [
     name: 'Little Free Library – Cypress Lane',
     category: 'library',
     lat: null, lng: null,
-    address: '1009 Cypress Lane, Davis, CA',
     geocodeAddress: '1009 Cypress Lane, Davis, CA',
+    address: '1009 Cypress Lane, Davis, CA',
     link: null,
     description: 'a little free library on Cypress Lane. swap a book, take a book.',
     source: 'community',
@@ -1096,8 +1071,8 @@ var ADDRESS_DATA = [
     name: 'Little Free Library – Pole Line Road',
     category: 'library',
     lat: null, lng: null,
-    address: '1309 Pole Line Road, Davis, CA',
     geocodeAddress: '1309 Pole Line Road, Davis, CA',
+    address: '1309 Pole Line Road, Davis, CA',
     link: null,
     description: 'a little free library on Pole Line Road. swap a book, take a book.',
     source: 'community',
@@ -1108,8 +1083,8 @@ var ADDRESS_DATA = [
     name: 'Little Free Library – Little Free Library Peace Garden',
     category: 'library',
     lat: null, lng: null,
-    address: '2005 Renoir Ave, Davis, CA',
     geocodeAddress: '2005 Renoir Ave, Davis, CA',
+    address: '2005 Renoir Ave, Davis, CA',
     link: null,
     description: 'a little free library at Peace Garden. swap a book, take a book.',
     source: 'community',
@@ -1120,8 +1095,8 @@ var ADDRESS_DATA = [
     name: 'Little Free Library – Dogs, Cars, and other Great Things',
     category: 'library',
     lat: null, lng: null,
-    address: '2125 Baywood Lane, Davis, CA',
     geocodeAddress: '2125 Baywood Lane, Davis, CA',
+    address: '2125 Baywood Lane, Davis, CA',
     link: null,
     description: 'a little free library on Baywood Lane. swap a book, take a book.',
     source: 'community',
@@ -1132,8 +1107,8 @@ var ADDRESS_DATA = [
     name: 'Little Free Library – Amanda\'s Library',
     category: 'library',
     lat: null, lng: null,
-    address: '3504 Mono Place, Davis, CA',
     geocodeAddress: '3504 Mono Place, Davis, CA',
+    address: '3504 Mono Place, Davis, CA',
     link: null,
     description: 'a little free library on Mono Place. swap a book, take a book.',
     source: 'community',
@@ -1144,8 +1119,8 @@ var ADDRESS_DATA = [
     name: 'Little Free Library – Little Woodbridge Library',
     category: 'library',
     lat: null, lng: null,
-    address: '4131 Hackberry Place, Davis, CA',
     geocodeAddress: '4131 Hackberry Place, Davis, CA',
+    address: '4131 Hackberry Place, Davis, CA',
     link: null,
     description: 'a little free library on the South Davis greenbelt. swap a book, take a book.',
     source: 'community',
@@ -1156,8 +1131,8 @@ var ADDRESS_DATA = [
     name: 'Little Free Library – Deodara Court',
     category: 'library',
     lat: null, lng: null,
-    address: 'Deodara Court, Davis, CA',
     geocodeAddress: 'Deodara Court, Davis, CA',
+    address: 'Deodara Court, Davis, CA',
     link: null,
     description: 'a little free library on Deodara Court. swap a book, take a book.',
     source: 'community',
@@ -1168,8 +1143,8 @@ var ADDRESS_DATA = [
     name: 'Little Free Library – Almond Lane',
     category: 'library',
     lat: null, lng: null,
-    address: '43351 Almond Lane, Davis, CA',
     geocodeAddress: '43351 Almond Lane, Davis, CA',
+    address: '43351 Almond Lane, Davis, CA',
     link: null,
     description: 'a little free library on Almond Lane. swap a book, take a book.',
     source: 'community',
@@ -1180,8 +1155,8 @@ var ADDRESS_DATA = [
     name: 'Little Free Library – La Mesa Ct',
     category: 'library',
     lat: null, lng: null,
-    address: '2238 La Mesa Ct, Davis, CA',
     geocodeAddress: '2238 La Mesa Ct, Davis, CA',
+    address: '2238 La Mesa Ct, Davis, CA',
     link: null,
     description: 'a little free library on La Mesa Ct. swap a book, take a book.',
     source: 'community',
@@ -1192,23 +1167,20 @@ var ADDRESS_DATA = [
     name: 'Little Free Library – El Pescador Ct',
     category: 'library',
     lat: null, lng: null,
-    address: '1725 El Pescador Ct, Davis, CA',
     geocodeAddress: '1725 El Pescador Ct, Davis, CA',
+    address: '1725 El Pescador Ct, Davis, CA',
     link: null,
     description: 'a little free library on El Pescador Ct. swap a book, take a book.',
     source: 'community',
     tags: ['free', 'community', 'sharing']
   },
-
-
-
   {
     id: 's93',
     name: 'Davis Community Meals & Housing (Paul\'s Place)',
     category: 'commun',
     lat: 38.5545674, lng: -121.7414329,
-    address: '1111 H St, Davis CA 95616',
     geocodeAddress: null,
+    address: '1111 H St, Davis CA 95616',
     link: 'https://www.daviscommunitymeals.org',
     description: 'free hot meals served daily to anyone in need. run by volunteers and staff. also provides emergency shelter referrals and community support. no questions asked.',
     source: 'public',
@@ -1219,41 +1191,32 @@ var ADDRESS_DATA = [
     name: 'St. Martin\'s Episcopal Church Community Meals',
     category: 'commun',
     lat: 38.548644, lng: -121.761772,
+    geocodeAddress: '640 Hawthorn Ln, Davis CA 95616',
     address: '640 Hawthorn Ln, Davis CA 95616',
-    geocodeAddress: null,
     link: null,
-    description: 'volunteer-run community meal program open to all. check with the church for current schedule.',
+    description: 'Volunteer-run community meal program open to all. Every Tuesday, Thursday and Saturday Hours: 5:45 PM - 6:30 PM, Sat: 11:30 AM - 12:15 PM',
     source: 'community',
     tags: ['free', 'volunteer', 'community']
   },
-
-
-
-
-  //  -------- pantries --------
-
   {
     id: 's95',
     name: 'ASUCD Pantry',
     category: 'pantry',
     lat: 38.5422208, lng: -121.7491641,
-    address: 'Memorial Union, 1 Shields Ave, Davis, CA 95616',
     geocodeAddress: 'Memorial Union, 1 Shields Ave, Davis, CA',
+    address: 'Memorial Union, 1 Shields Ave, Davis, CA 95616',
     link: 'https://thepantry.ucdavis.edu/',
     description: 'a community pantry located in Memorial Union.',
     source: 'public',
     tags: ['free', 'community']
   },
-
-  // -------- parks --------
-
   {
     id: 's96',
     name: 'Central Park',
     category: 'parks',
     lat: 38.546069010516284, lng: -121.745031624665,
-    address: '5th St & B St, 401 C St, Davis, CA 95616',
     geocodeAddress: null,
+    address: '5th St & B St, 401 C St, Davis, CA 95616',
     link: 'https://www.cityofdavis.org/city-hall/parks-and-community-services/parks-and-open-space',
     description: 'the heart of downtown Davis. open lawn, mature trees, a bandshell, and the Saturday Farmers Market. frequent free community events year-round. always open, never a fee.',
     source: 'public',
@@ -1264,8 +1227,8 @@ var ADDRESS_DATA = [
     name: 'Community Park',
     category: 'parks',
     lat: 38.55888423376993, lng: -121.74638635675947,
-    address: '203 E 14th St, Davis CA 95616',
     geocodeAddress: null,
+    address: '203 E 14th St, Davis CA 95616',
     link: 'https://www.cityofdavis.org/city-hall/parks-and-community-services/parks-and-open-space',
     description: 'large north Davis park with open fields, Rainbow City playground, picnic areas, and the Davis Art Center next door. free and open daily.',
     source: 'public',
@@ -1276,8 +1239,8 @@ var ADDRESS_DATA = [
     name: 'Slide Hill Park',
     category: 'parks',
     lat: 38.56044579738162, lng: -121.71648678246144,
-    address: '2850 Temple Dr, Davis, CA 95618',
     geocodeAddress: null,
+    address: '2850 Temple Dr, Davis, CA 95618',
     link: 'https://www.cityofdavis.org/city-hall/parks-and-community-services/parks-and-open-space',
     description: 'east Davis park with the famous cement slide, basketball, tennis, and softball. pool is open in summer for a small fee. the park itself is always free.',
     source: 'public',
@@ -1288,8 +1251,8 @@ var ADDRESS_DATA = [
     name: 'Sycamore Park',
     category: 'parks',
     lat: 38.55560273956896, lng: -121.76609100135528,
-    address: '1313 Sycamore Ln, Davis, CA 95616',
     geocodeAddress: null,
+    address: '1313 Sycamore Ln, Davis, CA 95616',
     link: 'https://www.cityofdavis.org/city-hall/parks-and-community-services/parks-and-open-space',
     description: 'west Davis neighborhood park with open lawn, playground, and greenbelt path access. free and open daily.',
     source: 'public',
@@ -1300,24 +1263,20 @@ var ADDRESS_DATA = [
     name: 'Northstar Park',
     category: 'parks',
     lat: 38.57119628529738, lng: -121.75112419290593,
-    address: '3434 Anderson Rd, Davis, CA 95616',
     geocodeAddress: null,
+    address: '3434 Anderson Rd, Davis, CA 95616',
     link: 'https://www.cityofdavis.org/city-hall/parks-and-community-services/parks-and-open-space',
     description: 'north Davis neighborhood park with open space, playground, and greenbelt connections. free and open daily.',
     source: 'public',
     tags: ['free']
   },
-
-
-  // -------- food & growing --------
-
   {
     id: 's103',
     name: 'UC Davis Student Farm Farmstand',
     category: 'garden',
     lat: 38.53930894554264, lng: -121.76539349992072,
-    address: '1200 Extension Center Dr, Davis CA 95616',
     geocodeAddress: null,
+    address: '1200 Extension Center Dr, Davis CA 95616',
     link: 'https://asi.ucdavis.edu/programs/sf/farm-marketplace',
     description: 'student-run farmstand on Extension Center Drive selling organic produce and sustainably grown flowers. open every Monday noon–3pm during the academic year. look for white pop-up tents. open to the whole community.',
     source: 'public',
@@ -1328,23 +1287,20 @@ var ADDRESS_DATA = [
     name: 'Davis Farmers Market',
     category: 'market',
     lat: 38.54470829935328, lng: -121.74415041068424,
-    address: 'Central Park, 4th St & C St, Davis CA 95616',
     geocodeAddress: null,
+    address: 'Central Park, 4th St & C St, Davis CA 95616',
     link: 'https://www.davisfarmersmarket.org',
     description: 'year-round outdoor market in Central Park. Saturdays 8am–1pm year-round; Wednesdays 3–6pm spring through fall. local produce, live music, prepared food, and craft vendors. free to attend.',
     source: 'public',
     tags: ['low-cost', 'community']
   },
-
-  // -------- community media --------
-
   {
     id: 's105',
     name: 'Davis Media Access (DCTV)',
     category: 'entertain',
     lat: 38.54901092239584, lng: -121.73139951539181,
-    address: '1623 5th St Suite A, Davis CA 95616',
     geocodeAddress: null,
+    address: '1623 5th St Suite A, Davis CA 95616',
     link: 'https://davismedia.org',
     description: 'nonprofit community media center open to all Davis residents. home to DCTV public access TV (channel 15 on cable). offers free media training, equipment access, and production workshops. tune in: Comcast ch. 15 / stream at dctv.davismedia.org.',
     source: 'public',
@@ -1354,9 +1310,9 @@ var ADDRESS_DATA = [
     id: 's106',
     name: 'KDRT 95.7 FM — Low Power Community Radio',
     category: 'entertain',
-    lat: 38.54901092239584, lng: -121.73150951539181,
-    address: '1623 5th St Suite A, Davis CA 95616',
+    lat: 38.54901092239584, lng: -121.7315095153918,
     geocodeAddress: null,
+    address: '1623 5th St Suite A, Davis CA 95616',
     link: 'https://kdrt.org',
     description: 'Davis\'s own low-power community radio station, run by Davis Media Access. volunteer DJs, local music, news, and talk. tune in at 95.7 FM or stream live at kdrt.org.',
     source: 'public',
@@ -1367,111 +1323,92 @@ var ADDRESS_DATA = [
     name: 'KDVS 90.3 FM — UC Davis Free Form Radio',
     category: 'entertain',
     lat: 38.542617, lng: -121.750264,
-    address: '14 Lower Freeborn Hall, UC Davis, Davis CA 95616',
     geocodeAddress: null,
+    address: '14 Lower Freeborn Hall, UC Davis, Davis CA 95616',
     link: 'https://kdvs.org',
     description: 'UC Davis student-run free-form radio station broadcasting since 1964. open to community volunteers and DJs. tune in at 90.3 FM or stream live at kdvs.org. one of the longest-running college radio stations in the US.',
     source: 'public',
     tags: ['free', 'volunteer', 'community']
   },
-
-  // -------- mutual aid --------
-
   {
     id: 's108',
     name: 'Buy Nothing Davis',
     category: 'mutual',
     lat: null, lng: null,
-    address: 'Davis, CA (neighborhood groups — no fixed location)',
     geocodeAddress: null,
+    address: 'Davis, CA (neighborhood groups — no fixed location)',
     link: 'https://www.facebook.com/groups/buynothingdavis/',
     description: 'hyperlocal gift economy on Facebook. give and receive household goods, food, skills, and time, completely free with no trading. find your neighborhood group at buynothingproject.org.',
     source: 'community',
-    tags: ['free','secondhand' ,'community']
+    tags: ['free', 'secondhand', 'community']
   },
-
-  // -------- parks / disc golf --------
-
   {
     id: 's109',
     name: 'Oxford Circle Park — Disc Golf',
     category: 'parks',
-    lat: 38.547581, lng: -121.765590,
-    address: 'Oxford Cir, Davis CA 95616',
+    lat: 38.547581, lng: -121.76559,
     geocodeAddress: null,
+    address: 'Oxford Cir, Davis CA 95616',
     link: 'https://www.cityofdavis.org/city-hall/parks-and-community-services/parks-and-open-space',
     description: 'west Davis park with a free 9-hole disc golf course. open daily. bring your own discs.',
     source: 'public',
     tags: ['free']
   },
-
-  // -------- nature --------
-
   {
     id: 's110',
     name: 'Mace Ranch Habitat Areas',
     category: 'parks',
     lat: 38.557739, lng: -121.707988,
-    address: 'Cowell Blvd at Mace Blvd, Davis CA 95618',
     geocodeAddress: null,
+    address: 'Cowell Blvd at Mace Blvd, Davis CA 95618',
     link: 'https://www.cityofdavis.org/city-hall/parks-and-community-services/parks-and-open-space',
     description: 'protected natural open space in east Davis. walking paths through native grassland and riparian habitat. good for birdwatching. free and open daily.',
     source: 'public',
     tags: ['free']
   },
-
-  // -------- entertainment --------
-
   {
     id: 's111',
     name: 'Davis Arts Center',
     category: 'entertain',
     lat: 38.560332, lng: -121.745245,
-    address: '1919 F St, Davis CA 95616',
     geocodeAddress: null,
+    address: '1919 F St, Davis CA 95616',
     link: 'https://davisartscenter.org',
     description: 'nonprofit arts center next to Community Park. gallery exhibitions are free and open to the public. low-cost classes and workshops also available. check their calendar for free opening receptions.',
     source: 'public',
     tags: ['free', 'low-cost', 'community', 'indie']
   },
-
   {
     id: 's112',
     name: 'Varsity Theatre',
     category: 'entertain',
     lat: 38.54414, lng: -121.74056,
+    geocodeAddress: '616 2nd St, Davis CA 95616',
     address: '616 2nd St, Davis CA 95616',
-    geocodeAddress: null,
     link: 'https://www.varsitytheatredavis.com',
-    description: 'single-screen independent cinema in downtown Davis, open since 1950. affordable tickets. check the website for showtimes and occasional community screenings.',
+    description: 'independent cinema in downtown Davis, open since 1950. showing indie films from studios like A24, and even local directors. depending on the show and time there can be more affordable tickets. check the website for showtimes and occasional community screenings.',
     source: 'public',
     tags: ['low-cost', 'indie']
   },
-
-  // -------- indie / secondhand / sustainable --------
-
   {
     id: 's113',
     name: 'Logos Books & Records',
     category: 'thrift',
     lat: 38.543184, lng: -121.741955,
-    address: '513 2nd St, Davis CA 95616',
     geocodeAddress: null,
+    address: '513 2nd St, Davis CA 95616',
     link: null,
     description: 'used bookstore and record shop in downtown Davis, open since 1969. secondhand books, vinyl, and local zines at low prices.',
     source: 'public',
     tags: ['secondhand', 'indie', 'low-cost']
   },
-
-  // -------- community garden --------
-
   {
     id: 's114',
     name: 'Grande Avenue Community Garden',
     category: 'garden',
-    lat: 38.568911, lng: -121.749800,
-    address: '300 Grande Ave, Davis CA 95616',
+    lat: 38.568911, lng: -121.7498,
     geocodeAddress: '300 Grande Ave, Davis, CA',
+    address: '300 Grande Ave, Davis CA 95616',
     link: 'https://cityofdavis.org/city-hall/parks-community-services/parks-open-space/community-gardens',
     description: 'city-run community garden on Grande Ave in north Davis. annual plot rental fee covers land, water, and basic maintenance. apply through the city parks department.',
     source: 'public',
