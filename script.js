@@ -729,16 +729,25 @@ async function fetchBack4App() {
 
     for (var i = 0; i < rows.length; i++) {
       var r = rows[i];
-      if (!r.lat || !r.lng) continue;
+
+      // Don't skip entries missing lat/lng — if an address exists, the
+      // geocodeSeedData pass will resolve it exactly as it does for ADDRESS_DATA.
+      // getFiltered() already hides coord-less entries from the map until resolved.
+      var hasCoords = (r.lat != null && r.lng != null && r.lat !== 0 && r.lng !== 0);
+
       results.push({
-        id:          r.objectId,
-        name:        r.name,
-        category:    r.category,
-        lat:         r.lat,
-        lng:         r.lng,
-        address:     r.address,
-        description: r.description,
-        source:      'opengrounds'
+        id:             r.objectId,
+        name:           r.name        || '',
+        category:       r.category    || 'other',
+        lat:            hasCoords ? parseFloat(r.lat) : null,
+        lng:            hasCoords ? parseFloat(r.lng) : null,
+        address:        r.address     || '',
+        description:    r.description || '',
+        tags:           Array.isArray(r.tags) ? r.tags : [],
+        link:           r.link        || '',
+        source:         'community',
+        // hand the address to the geocoder when coords are absent
+        geocodeAddress: (!hasCoords && r.address) ? r.address : undefined
       });
     }
 
