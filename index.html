@@ -455,9 +455,15 @@
     </button>
   </div>
 
+  <!-- MOBILE SHEET SCRIM — tap to dismiss -->
+  <div class="mobile-sheet-scrim" id="mobile-sheet-scrim" onclick="mobileSwitchTab('map')"></div>
+
   <!-- MOBILE SHEET — slides up to show filters or listings -->
   <div class="mobile-sheet" id="mobile-sheet">
-    <div class="mobile-sheet-handle"></div>
+    <div class="mobile-sheet-top" id="mobile-sheet-top">
+      <div class="mobile-sheet-handle"></div>
+      <button class="mobile-sheet-close" onclick="mobileSwitchTab('map')" aria-label="close">&#x2715;</button>
+    </div>
     <div class="mobile-sheet-content" id="mobile-sheet-content">
       <!-- content swapped by mobileSwitchTab() -->
     </div>

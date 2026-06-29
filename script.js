@@ -1467,11 +1467,15 @@ function mobileSwitchTab(tab) {
   if (tab === 'map') {
     // close the sheet, show the map
     if (sheet) sheet.classList.remove('open');
+    var scrim = document.querySelector('#mobile-sheet-scrim');
+    if (scrim) scrim.classList.remove('active');
     return;
   }
 
   if (!sheet || !content) return;
   sheet.classList.add('open');
+  var scrim = document.querySelector('#mobile-sheet-scrim');
+  if (scrim) scrim.classList.add('active');
 
   if (tab === 'filter') {
     content.innerHTML =
@@ -1590,6 +1594,37 @@ function renderMobileListings() {
     el.appendChild(card);
   }
 }
+
+
+/* ============================================================
+   MOBILE SHEET — swipe-down to dismiss
+   ============================================================ */
+
+(function() {
+  var sheetTop = document.querySelector('#mobile-sheet-top');
+  if (!sheetTop) return; // not in DOM yet — wire on DOMContentLoaded instead
+
+  function wireSwipe() {
+    var el = document.querySelector('#mobile-sheet-top');
+    if (!el) return;
+    var startY = null;
+    el.addEventListener('touchstart', function(e) {
+      startY = e.touches[0].clientY;
+    }, { passive: true });
+    el.addEventListener('touchend', function(e) {
+      if (startY === null) return;
+      var dy = e.changedTouches[0].clientY - startY;
+      startY = null;
+      if (dy > 40) { mobileSwitchTab('map'); }
+    }, { passive: true });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', wireSwipe);
+  } else {
+    wireSwipe();
+  }
+}());
 
 
 /* ============================================================

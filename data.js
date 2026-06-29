@@ -8,7 +8,7 @@
     'community' — community-submitted or crowd-sourced (little free libraries, freedges)
     'fallingfruit' — falling fruit foraging database (assigned by script.js at fetch time)
 
-  exported from the admin page on 6/18/2026, 8:56:47 AM
+  exported from the admin page on 6/29/2026, 8:52:31 AM
 */
 
 
@@ -1193,12 +1193,12 @@ var ADDRESS_DATA = [
     name: 'St. Martin\'s Episcopal Church Community Meals',
     category: 'commun',
     lat: 38.548644, lng: -121.761772,
-    geocodeAddress: null,
+    geocodeAddress: '640 Hawthorn Ln, Davis CA 95616',
     address: '640 Hawthorn Ln, Davis CA 95616',
     link: null,
-    description: 'volunteer-run community meal program open to all. check with the church for current schedule.',
+    description: 'Davis Community Meals Days: Every Tuesday, Thursday and Saturday Hours: 5:45 PM - 6:30 PM, Sat: 11:30 AM - 12:15 PM',
     source: 'community',
-    tags: ['free', 'volunteer', 'community']
+    tags: ['free', 'community', 'volunteer']
   },
   {
     id: 's95',
